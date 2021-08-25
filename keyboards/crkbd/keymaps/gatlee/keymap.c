@@ -100,51 +100,50 @@ U_NP,    U_NP,    KC_APP,  KC_SPC,  KC_TAB,  U_NA,    U_NA,    U_NA,    U_NP,   
 )
 };
 
-#ifdef OLED_DRIVER_ENABLE
 
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 	return OLED_ROTATION_180;
 }
 
-static void render_status(void) {
-    // Host Keyboard Layer Status
-    oled_write_P(PSTR("Layer: "), false);
-    switch (get_highest_layer(layer_state)) {
-        case BASE:
-            oled_write_P(PSTR("BASE  "), false);
-            break;
-        case NAV:
-            oled_write_P(PSTR("NAV  "), false);
-            break;
-        case MOUSE:
-            oled_write_P(PSTR("MOUSE "), false);
-            break;
-        case MEDIA:
-            oled_write_P(PSTR("MEDIA "), false);
-            break;
-        case MBO:
-            oled_write_P(PSTR("MBO   "), false);
-            break;
-        case NUM:
-            oled_write_P(PSTR("NUM   "), false);
-            break;
-        case SYM:
-            oled_write_P(PSTR("SYM   "), false);
-            break;
-        case FUN:
-            oled_write_P(PSTR("FUN   "), false);
-            break;
-        default:
-            oled_write_P(PSTR("Undefined"), false);
-    }
+// static void render_status(void) {
+//     // Host Keyboard Layer Status
+//     oled_write_P(PSTR("Layer: "), false);
+//     switch (get_highest_layer(layer_state)) {
+//         case BASE:
+//             oled_write_P(PSTR("BASE  "), false);
+//             break;
+//         case NAV:
+//             oled_write_P(PSTR("NAV  "), false);
+//             break;
+//         case MOUSE:
+//             oled_write_P(PSTR("MOUSE "), false);
+//             break;
+//         case MEDIA:
+//             oled_write_P(PSTR("MEDIA "), false);
+//             break;
+//         case MBO:
+//             oled_write_P(PSTR("MBO   "), false);
+//             break;
+//         case NUM:
+//             oled_write_P(PSTR("NUM   "), false);
+//             break;
+//         case SYM:
+//             oled_write_P(PSTR("SYM   "), false);
+//             break;
+//         case FUN:
+//             oled_write_P(PSTR("FUN   "), false);
+//             break;
+//         default:
+//             oled_write_P(PSTR("Undefined"), false);
+//     }
 
     //Host Keyboard LED Status
-    led_t led_state = host_keyboard_led_state();
-    oled_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("       "), false);
-    oled_write_P(led_state.caps_lock ? PSTR("CAPS ") : PSTR("       "), false);
-    oled_write_P(led_state.scroll_lock ? PSTR("SCRL") : PSTR("       "), false);
-}
+//     led_t led_state = host_keyboard_led_state();
+//     oled_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("       "), false);
+//     oled_write_P(led_state.caps_lock ? PSTR("CAPS ") : PSTR("       "), false);
+//     oled_write_P(led_state.scroll_lock ? PSTR("SCRL") : PSTR("       "), false);
+// }
 
 
 // WPM-responsive animation stuff here
@@ -265,17 +264,21 @@ static void render_anim(void) {
     }
 }
 
-// static void render_skull(void) { // Helen Tseong (http://shewolfe.co/), the original artist behind the skull, sadly only allowing use of the skull for my personal use. Her (excellent) works are copyright her, and I claim no ownership. Reach out to her for permission!
-//     static const char PROGMEM skull[] = {
-//     };
-//      oled_write_raw_P(skull, 801);
-//  }
+static void render_funky_cat(void) { // Funky cat is life
+    static const char PROGMEM raw_logo[] = {
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,128,128,128,  0,  0,  0,  0,128,128,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,128,128,128,  0,  0,  0,  0,128,128,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,128,128,128,  0,  0,  0,  0,128,128,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 24, 60,254,254,254,206,239,255,175, 15,255,255,254,248,255,255,255,255,252,254,254,126,252,252,254,255,255, 14,  0,  0,  0,  0,  0,  0,  0,  0,  0, 24, 60,254,254,254,206,239,255,175, 15,255,255,254,248,255,255,255,255,252,254,254,126,252,252,254,255,255, 14,  0,  0,  0,  0,  0,  0,  0,  0, 24, 60,254,254,254,206,239,255,175, 15,255,255,254,248,255,255,255,255,252,254,254,126,252,252,254,255,255, 14,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  7, 15, 15, 15, 28, 30, 63, 62, 30, 31, 15,135,247,255,255,255,127,127,127,126,124,127,127,255,255,255,224,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  7, 15, 15, 15, 28, 30, 63, 62, 30, 31, 15,135,247,255,255,255,127,127,127,126,124,127,127,255,255,255,224,  0,  0,  0,  0,  0,  0,  0,  0,  6,  7, 15, 15, 15, 28, 30, 63, 62, 30, 31, 15,135,247,255,255,255,127,127,127,126,124,127,127,255,255,255,224,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+        0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  3,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  3,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  3,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+    };
+    oled_write_raw_P(raw_logo, sizeof(raw_logo));
+ }
 
 void oled_task_user(void) {
     if (is_keyboard_master()) {
-        //render_skull();
+        render_funky_cat();
         //oled_set_cursor(7,6);
-        render_status();
+        //render_status();
      // Renders the current keyboard state (layer, lock, caps, scroll, etc)
     } else {
         render_anim();
@@ -285,4 +288,3 @@ void oled_task_user(void) {
 
     }
 }
-#endif
