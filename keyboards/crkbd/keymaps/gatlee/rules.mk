@@ -7,6 +7,8 @@ MOUSEKEY_ENABLE = yes # Mouse keys
 EXTRAKEY_ENABLE = yes # Audio control and System control
 AUTO_SHIFT_ENABLE = yes # Auto Shift
 OLED_DRIVER_ENABLE = yes
+WPM_ENABLE = yes
+LTO_ENABLE = yes
 
 # alternative layouts:
 
