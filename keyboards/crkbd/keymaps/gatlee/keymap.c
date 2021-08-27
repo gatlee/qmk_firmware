@@ -74,7 +74,7 @@ U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_BTN1, KC_BTN3, KC_BTN2, U_NP,   
 [MEDIA] = LAYOUT_miryoku(
 RESET,   U_NA,    U_NA,    U_NA,    U_NA,    U_NA,    D_MUTE,  D_DEAF,  U_NA,    U_NA,
 KC_LCTL, KC_LALT, KC_LSFT, KC_LGUI, U_NA,    KC_MPRV, KC_MPRV, KC_MPLY, KC_MNXT, U_NU,
-U_NA,    U_NA,    U_NA,    U_NA,    U_NA,    KC_MUTE, KC_VOLD, KC_VOLU, U_NU,    U_NU,
+U_NA,    U_NA,    U_NA,    U_NA,    U_NA,    U_NU,    KC_MUTE, KC_VOLD, KC_VOLU, U_NU,
 U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_ENT,  KC_SPC,  KC_BSPC, U_NP,    U_NP //TODO
 ),
 [MBO] = LAYOUT_miryoku(
