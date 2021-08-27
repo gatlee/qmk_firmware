@@ -57,7 +57,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 KC_Q,              KC_W,              KC_E,              KC_R,              KC_T,              KC_Y,              KC_U,              KC_I,              KC_O,              KC_P,
 LCTL_T(KC_A),      LALT_T(KC_S),      LSFT_T(KC_D),      LGUI_T(KC_F),      KC_G,              KC_H,              LGUI_T(KC_J),      LSFT_T(KC_K),      LALT_T(KC_L),      LCTL_T(KC_SCOLON),
 KC_Z,              ALGR_T(KC_X),      KC_C,              KC_V,              KC_B,              KC_N,              KC_M,              KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
-U_NP,              U_NP,              LT(MEDIA, KC_DEL), LT(NAV, KC_ESC),   LT(MOUSE, KC_TAB), LT(SYM, KC_ENT),   LT(NUM, KC_SPC),   LT(FUN, KC_BSPC),  U_NP,              U_NP
+U_NP,              U_NP,              LT(MEDIA, KC_DEL), LT(NAV, KC_ESC),   LT(MOUSE, KC_TAB), LT(FUN, KC_ENT),   LT(SYM, KC_SPC),   LT(NUM, KC_BSPC),  U_NP,              U_NP
 ),
 [NAV] = LAYOUT_miryoku(
 RESET,   U_NA,    U_NA,    U_NA,    U_NA,    U_RDO,   U_PST,   U_CPY,   U_CUT,   U_UND,
