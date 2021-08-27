@@ -14,7 +14,7 @@
 #define D_DEAF KC_F15 // Discord deafen
 
 
-enum layers { BASE, MBO, MEDIA, NAV, MOUSE, SYM, NUM, FUN };
+enum layers { BASE, MBO, MEDIA, NAV, MOUSE, SYM, NUM, FUN, GAME};
 
 #if defined MIRYOKU_CLIPBOARD_FUN
 #define U_RDO KC_AGIN
@@ -102,8 +102,6 @@ KC_F10,  KC_F7,   KC_F8,   KC_F9,   KC_PAUS, U_NA,    U_NA,    U_NA,    U_NA,   
 U_NP,    U_NP,    KC_APP,  KC_SPC,  KC_TAB,  U_NA,    U_NA,    U_NA,    U_NP,    U_NP
 )
 };
-
-
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 	return OLED_ROTATION_180;
@@ -288,6 +286,5 @@ void oled_task_user(void) {
         oled_set_cursor(0,6);
         sprintf(wpm_str, "       WPM: %03d", get_current_wpm());
         oled_write(wpm_str, false);
-
     }
 }
