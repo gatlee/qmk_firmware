@@ -10,6 +10,9 @@
 #define U_NP KC_NO // key is not present
 #define U_NA KC_NO // present but not available for use
 #define U_NU KC_NO // available but not used
+#define D_MUTE KC_F16 // Discord mute
+#define D_DEAF KC_F15 // Discord deafen
+
 
 enum layers { BASE, MBO, MEDIA, NAV, MOUSE, SYM, NUM, FUN };
 
@@ -60,7 +63,7 @@ U_NP,              U_NP,              LT(MEDIA, KC_DEL), LT(NAV, KC_ESC),   LT(M
 RESET,   U_NA,    U_NA,    U_NA,    U_NA,    U_RDO,   U_PST,   U_CPY,   U_CUT,   U_UND,
 KC_LCTL, KC_LALT, KC_LSFT, KC_LGUI, U_NA,    KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_CAPS,
 U_NA,    U_NA,    U_NA,    U_NA,    U_NA,    KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_INS,
-U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_ENT,  KC_BSPC, KC_BSPC, U_NP,    U_NP
+U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_ENT,  KC_SPC,  KC_BSPC, U_NP,    U_NP
 ),
 [MOUSE] = LAYOUT_miryoku(
 RESET,   U_NA,    U_NA,    U_NA,    U_NA,    U_RDO,   U_PST,   U_CPY,   U_CUT,   U_UND,
@@ -69,10 +72,10 @@ U_NA,    U_NA,    U_NA,    U_NA,    U_NA,    KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R,
 U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_BTN1, KC_BTN3, KC_BTN2, U_NP,    U_NP
 ),
 [MEDIA] = LAYOUT_miryoku(
-RESET,   U_NA,    U_NA,    U_NA,    U_NA,    RGB_TOG, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI,
-KC_LCTL, KC_LALT, KC_LSFT, KC_LGUI, U_NA,    KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, U_NU,
-U_NA,    U_NA,    U_NA,    U_NA,    U_NA,    U_NU,    U_NU,    U_NU,    U_NU,    U_NU,
-U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_MSTP, KC_MPLY, KC_MUTE, U_NP,    U_NP
+RESET,   U_NA,    U_NA,    U_NA,    U_NA,    U_NA,    D_MUTE,  D_DEAF,  U_NA,    U_NA,
+KC_LCTL, KC_LALT, KC_LSFT, KC_LGUI, U_NA,    KC_MPRV, KC_MPRV, KC_MPLY, KC_MNXT, U_NU,
+U_NA,    U_NA,    U_NA,    U_NA,    U_NA,    KC_MUTE, KC_VOLD, KC_VOLU, U_NU,    U_NU,
+U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_ENT,  KC_SPC,  KC_BSPC, U_NP,    U_NP //TODO
 ),
 [MBO] = LAYOUT_miryoku(
 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
