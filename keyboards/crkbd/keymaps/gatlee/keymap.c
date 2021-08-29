@@ -74,8 +74,8 @@ U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_BTN1, KC_BTN3, KC_BTN2, U_NP,   
 [MEDIA] = LAYOUT_miryoku(
 RESET,   U_NA,    U_NA,    U_NA,    U_NA,    U_NA,    D_MUTE,  D_DEAF,  U_NA,    U_NA,
 KC_LCTL, KC_LALT, KC_LSFT, KC_LGUI, U_NA,    KC_MPRV, KC_MPRV, KC_MPLY, KC_MNXT, U_NU,
-U_NA,    U_NA,    U_NA,    U_NA,    U_NA,    U_NU,    KC_MUTE, KC_VOLD, KC_VOLU, U_NU,
-U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_ENT,  KC_SPC,  KC_BSPC, U_NP,    U_NP //TODO
+U_NA,    U_NA,    U_NA,    U_NA,    U_NA,    KC_MUTE, KC_VOLD, KC_VOLU, KC_MUTE, U_NU,
+U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_ENT,  KC_SPC,  KC_BSPC, U_NP,    U_NP
 ),
 [MBO] = LAYOUT_miryoku(
 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
@@ -99,7 +99,7 @@ U_NP,    U_NP,    KC_LPRN, KC_RPRN, KC_UNDS, U_NA,    U_NA,    U_NA,    U_NP,   
 KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_PSCR, U_NA,    U_NA,    U_NA,    U_NA,    RESET,
 KC_F11,  KC_F4,   KC_F5,   KC_F6,   KC_SLCK, U_NA,    KC_LGUI, KC_LSFT, KC_LALT, KC_LCTL,
 KC_F10,  KC_F7,   KC_F8,   KC_F9,   KC_PAUS, U_NA,    U_NA,    U_NA,    U_NA,    U_NA,
-U_NP,    U_NP,    KC_APP,  KC_SPC,  KC_TAB,  U_NA,    U_NA,    U_NA,    U_NP,    U_NP
+U_NP,    U_NP,    KC_APP,  KC_ESC,  KC_TAB,  U_NA,    U_NA,    U_NA,    U_NP,    U_NP
 )
 };
 
