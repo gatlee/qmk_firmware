@@ -85,13 +85,13 @@ U_NP,    U_NP,    KC_BTN2, KC_BTN3, KC_BTN1, KC_BTN1, KC_BTN3, KC_BTN2, U_NP,   
 ),
 [NUM] = LAYOUT_miryoku(
 KC_LBRC, KC_1,    KC_2,    KC_3,    KC_RBRC, U_NA,    U_NA,    U_NA,    U_NA,    RESET,
-KC_SCLN, KC_4,    KC_5,    KC_6,    KC_EQL,  U_NA,    KC_LGUI, KC_LSFT, KC_LALT, KC_LCTL,
+KC_0,    KC_4,    KC_5,    KC_6,    KC_EQL,  U_NA,    KC_LGUI, KC_LSFT, KC_LALT, KC_LCTL,
 KC_GRV,  KC_7,    KC_8,    KC_9,    KC_BSLS, U_NA,    U_NA,    U_NA,    U_NA,    U_NA,
 U_NP,    U_NP,    KC_DOT,  KC_0,    KC_MINS, U_NA,    U_NA,    U_NA,    U_NP,    U_NP
 ),
 [SYM] = LAYOUT_miryoku(
 KC_LCBR, KC_EXLM, KC_AT,   KC_HASH, KC_RCBR, U_NA,    U_NA,    U_NA,    U_NA,    RESET,
-KC_COLN, KC_DLR,  KC_PERC, KC_CIRC, KC_PLUS, U_NA,    KC_LGUI, KC_LSFT, KC_LALT, KC_LCTL,
+KC_LPRN, KC_DLR,  KC_PERC, KC_CIRC, KC_PLUS, U_NA,    KC_LGUI, KC_LSFT, KC_LALT, KC_LCTL,
 KC_TILD, KC_AMPR, KC_ASTR, KC_LPRN, KC_PIPE, U_NA,    U_NA,    U_NA,    U_NA,    U_NA,
 U_NP,    U_NP,    KC_LPRN, KC_RPRN, KC_UNDS, U_NA,    U_NA,    U_NA,    U_NP,    U_NP
 ),
@@ -273,6 +273,9 @@ static void render_funky_cat(void) { // Funky cat is life
         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  3,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  3,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  3,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
     };
     oled_write_raw_P(raw_logo, sizeof(raw_logo));
+    if(get_current_wpm() != 000) {
+        oled_on(); // not essential but turns on animation OLED with any alpha keypress
+    }
  }
 
 void oled_task_user(void) {
