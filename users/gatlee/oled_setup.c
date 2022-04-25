@@ -38,6 +38,7 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 #    define L_NUM 64
 #    define L_SYM 32
 #    define L_FUN 128
+#    define L_GAME 256
 
 char x[5];
 void oled_render_layer_state(void) {
@@ -63,6 +64,9 @@ void oled_render_layer_state(void) {
             break;
         case L_FUN:
             oled_write_ln_P(PSTR("Fun  "), false);
+            break;
+        case L_GAME:
+            oled_write_ln_P(PSTR("Game "), false);
             break;
         default:
             sprintf(x, "%ld", layer_state);
@@ -136,7 +140,7 @@ void render_bootmagic_status(void) {
 }
 
 void oled_task_user(void) {
-    if (!is_keyboard_master()) {
+    if (is_keyboard_master()) {
         oled_render_layer_state();
         oled_render_keylog();
         render_bootmagic_status();

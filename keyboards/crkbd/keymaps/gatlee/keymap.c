@@ -17,7 +17,7 @@
 #define D_DEAF KC_F15 // Discord deafen
 
 
-// enum layers { BASE, MBO, MEDIA, NAV, MOUSE, SYM, NUM, FUN, GAME};
+enum layers { BASE, MBO, MEDIA, NAV, MOUSE, SYM, NUM, FUN, GAME, GAME_ALT};
 
 #if defined MIRYOKU_CLIPBOARD_FUN
 #define U_RDO KC_AGIN
@@ -59,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [BASE] = LAYOUT_miryoku(
 KC_Q,              KC_W,              KC_E,              KC_R,              KC_T,              KC_Y,              KC_U,              KC_I,              KC_O,              KC_P,
 LCTL_T(KC_A),      LALT_T(KC_S),      LSFT_T(KC_D),      LGUI_T(KC_F),      KC_G,              KC_H,              LGUI_T(KC_J),      LSFT_T(KC_K),      LALT_T(KC_L),      LCTL_T(KC_SCOLON),
-KC_Z,              ALGR_T(KC_X),      KC_C,              KC_V,              KC_B,              KC_N,              KC_M,              KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
+KC_Z,              ALGR_T(KC_X),      KC_C,              LCAG_T(KC_V),      KC_B,              KC_N,              LCAG_T(KC_M),      KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
 U_NP,              U_NP,              LT(MEDIA, KC_DEL), LT(NAV, KC_ESC),   LT(MOUSE, KC_TAB), LT(FUN, KC_ENT),   LT(SYM, KC_SPC),   LT(NUM, KC_BSPC),  U_NP,              U_NP
 ),
 [NAV] = LAYOUT_miryoku(
@@ -76,7 +76,7 @@ U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_BTN1, KC_BTN3, KC_BTN2, U_NP,   
 ),
 [MEDIA] = LAYOUT_miryoku(
 RESET,   U_NA,    U_NA,    U_NA,    U_NA,    U_NA,    D_MUTE,  D_DEAF,  U_NA,    U_NA,
-KC_LCTL, KC_LALT, KC_LSFT, KC_LGUI, U_NA,    KC_MPRV, KC_MPRV, KC_MPLY, KC_MNXT, U_NU,
+KC_LCTL, KC_LALT, KC_LSFT, KC_LGUI, U_NA,    KC_MPRV, KC_MPRV, KC_MPLY, KC_MNXT, TG(GAME),
 U_NA,    U_NA,    U_NA,    U_NA,    U_NA,    KC_MUTE, KC_VOLD, KC_VOLU, KC_MUTE, U_NU,
 U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_ENT,  KC_SPC,  KC_BSPC, U_NP,    U_NP
 ),
@@ -103,5 +103,17 @@ KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_PSCR, U_NA,    U_NA,    U_NA,    U_NA,   
 KC_F11,  KC_F4,   KC_F5,   KC_F6,   KC_SLCK, U_NA,    KC_LGUI, KC_LSFT, KC_LALT, KC_LCTL,
 KC_F10,  KC_F7,   KC_F8,   KC_F9,   KC_PAUS, U_NA,    U_NA,    U_NA,    U_NA,    U_NA,
 U_NP,    U_NP,    KC_APP,  KC_ESC,  KC_TAB,  U_NA,    U_NA,    U_NA,    U_NP,    U_NP
+),
+[GAME] = LAYOUT_split_3x6_3(
+KC_TAB,         KC_Q,  KC_W,  KC_E,   KC_R,   KC_T,   KC_Y,   KC_U,    KC_I,    KC_O,   KC_P,      TG(GAME),
+LCTL_T(KC_ESC), KC_A,  KC_S,  KC_D,   KC_F,   KC_G,   KC_H,   KC_J,    KC_K,    KC_L,   KC_SCOLON, KC_ENT,
+KC_LSFT,        KC_Z,  KC_X,  KC_C,   KC_V,   KC_B,   KC_N,   KC_M,    KC_COMM, KC_DOT, KC_SLSH,   KC_ESC,
+                              KC_LALT, KC_SPC, MO(GAME_ALT),  KC_ENT, KC_SPC, KC_BSPC
+),
+[GAME_ALT] = LAYOUT_split_3x6_3(
+KC_TAB,         KC_F1,  KC_F2,  KC_F3,   KC_F4,   KC_F5,   KC_Y,   KC_U,    KC_I,    KC_O,   KC_P,      TG(GAME),
+LCTL_T(KC_ESC), KC_1,   KC_2,   KC_3,    KC_4,    KC_5,    KC_H,   KC_J,    KC_K,    KC_L,   KC_SCOLON, KC_ENT,
+KC_LSFT,        KC_Z,   KC_X,   KC_C,    KC_V,    KC_B,    KC_N,   KC_M,    KC_COMM, KC_DOT, KC_SLSH,   KC_ESC,
+                              KC_LALT, KC_SPC, U_NA, KC_ENT, KC_SPC, KC_BSPC
 )
 };

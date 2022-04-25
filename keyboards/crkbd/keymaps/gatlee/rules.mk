@@ -12,3 +12,7 @@ LTO_ENABLE = yes
 LUNA_ENABLE = no
 
 OCEAN_DREAM_ENABLE = yes
+
+# Enable maybe for usb-c?
+#BOOTLOADER = atmel-dfu
+#MCU = atmega32u4

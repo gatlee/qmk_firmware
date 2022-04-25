@@ -22,4 +22,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 
-enum layers { BASE, MBO, MEDIA, NAV, MOUSE, SYM, NUM, FUN, GAME};
+// enum layers { BASE, MBO, MEDIA, NAV, MOUSE, SYM, NUM, FUN, GAME};
