@@ -59,3 +59,5 @@ KC_NO,    K20,   K21,   K22,   K23,   K24,          K25,   K26,   K27,   K28,   
 )
 
 #define OLED_TIMEOUT 60000
+
+#define COMBO_COUNT 1
