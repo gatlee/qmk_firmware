@@ -1,101 +1,41 @@
 # After making changes to code or tables call org-babel-tangle (C-c C-v t).
 
-#+Title: Miryoku [[https://raw.githubusercontent.com/manna-harbour/miryoku/master/data/logos/miryoku-roa-32.png]]
+* Miryoku QMK [[https://raw.githubusercontent.com/manna-harbour/miryoku/master/data/logos/miryoku-roa-32.png]]
 
 [[https://raw.githubusercontent.com/manna-harbour/miryoku/master/data/cover/miryoku-kle-cover.png]]
 
-Miryoku is an ergonomic, minimal, orthogonal layout for ergo or ortho keyboards,
-implemented as part of the QMK firmware.
+[[https://github.com/manna-harbour/miryoku/][Miryoku]] is an ergonomic, minimal, orthogonal, and universal keyboard layout.  This is the Miryoku implementation for [[https://qmk.fm][QMK]].
 
-The layout is maintained in emacs org-mode tables and converted to QMK keymap
-data structures using embedded python scripts.  It is mapped onto keyboards with
-different physical layouts as a subset without code duplication using the QMK
-userspace feature and C macros.
+** Branches
 
-Please see the [[https://github.com/manna-harbour/qmk_firmware/blob/miryoku/users/manna-harbour_miryoku/miryoku.org][development branch]] for any [[https://github.com/qmk/qmk_firmware/compare/master...manna-harbour:miryoku][updates not yet merged into QMK]].
 
-To checkout the development branch in your existing QMK build environment:
+*** QMK master
+
+Miryoku QMK is periodically merged upstream into QMK master and it is generally recommended to build directly from QMK master.
+
+QMK master is at https://github.com/qmk/qmk_firmware/tree/master, and the corresponding Miryoku QMK readme is at https://github.com/qmk/qmk_firmware/tree/master/users/manna-harbour_miryoku.
+
+
+*** Miryoku QMK development branch
+
+The Miryoku QMK development branch is ~miryoku~ and may contain new commits not yet merged into QMK master.
+
+~miryoku~ is at https://github.com/manna-harbour/miryoku_qmk/tree/miryoku, and the corresponding Miryoku QMK readme is at https://github.com/manna-harbour/miryoku_qmk/tree/miryoku/users/manna-harbour_miryoku.
+
+New commits can be seen at the top of the [[https://github.com/manna-harbour/miryoku_qmk/commits/miryoku][history]] with commit messages beginning ~[miryoku]~.  After the new commits are squashed and merged upstream into QMK master by pull request the ~miryoku~ branch is renamed and a new ~miryoku~ branch is created from QMK master.
+
+To checkout the ~miryoku~ branch in your existing QMK build environment:
 #+BEGIN_SRC sh :tangle no
-git remote add manna-harbour git@github.com:manna-harbour/qmk_firmware.git # ssh
-git remote add manna-harbour https://github.com/manna-harbour/qmk_firmware.git # https
-git fetch manna-harbour
-git checkout --track manna-harbour/miryoku
+git remote add miryoku_qmk git@github.com:manna-harbour/miryoku_qmk.git # if using SSH
+git remote add miryoku_qmk https://github.com/manna-harbour/miryoku_qmk.git # if using HTTPS
+git fetch miryoku_qmk
+git checkout --track miryoku_qmk/miryoku
 #+END_SRC
 
-Additional implementations and visualisations are provided outside QMK in the
-[[https://github.com/manna-harbour/miryoku/blob/master/README.org][Miryoku (Extras) repository]].
 
+** Layout
 
-* Contents                                                              :TOC_3:
-- [[#layout][Layout]]
-  - [[#general-principles][General Principles]]
-  - [[#details][Details]]
-  - [[#layers][Layers]]
-    - [[#base][Base]]
-    - [[#nav][Nav]]
-    - [[#mouse][Mouse]]
-    - [[#button][Button]]
-    - [[#media][Media]]
-    - [[#num][Num]]
-    - [[#sym][Sym]]
-    - [[#fun][Fun]]
-    - [[#alternative-layouts][Alternative Layouts]]
-- [[#code-generation][Code Generation]]
-  - [[#table-conversion-scripts][Table Conversion Scripts]]
-    - [[#table-layout-taphold][table-layout-taphold]]
-    - [[#table-layout-half][table-layout-half]]
-    - [[#table-layout-full][table-layout-full]]
-    - [[#table-enums][table-enums]]
-    - [[#table-keycode-mappings][table-keycode-mappings]]
-  - [[#data][Data]]
-    - [[#symbol-names][symbol-names]]
-    - [[#mods][mods]]
-    - [[#nonkc][nonkc]]
-    - [[#header][header]]
-    - [[#license-qmk][license-qmk]]
-- [[#subset-mapping][Subset Mapping]]
-  - [[#userspace][Userspace]]
-    - [[#usersmanna-harbour_miryokurulesmk][users/manna-harbour_miryoku/rules.mk]]
-    - [[#usersmanna-harbour_miryokuconfigh][users/manna-harbour_miryoku/config.h]]
-    - [[#usersmanna-harbour_miryokumanna-harbour_miryokuh][users/manna-harbour_miryoku/manna-harbour_miryoku.h]]
-    - [[#usersmanna-harbour_miryokumanna-harbour_miryokuc][users/manna-harbour_miryoku/manna-harbour_miryoku.c]]
-  - [[#layouts][Layouts]]
-    - [[#60_ansi][60_ansi]]
-    - [[#ergodox][ergodox]]
-    - [[#ortho_4x10][ortho_4x10]]
-    - [[#ortho_4x12][ortho_4x12]]
-    - [[#ortho_5x12][ortho_5x12]]
-    - [[#ortho_5x15][ortho_5x15]]
-    - [[#planck_mit][planck_mit]]
-    - [[#split_3x5_3][split_3x5_3]]
-    - [[#split_3x6_3][split_3x6_3]]
-  - [[#keyboards][Keyboards]]
-    - [[#atreus][atreus]]
-    - [[#bastardkbscylla][bastardkb/scylla]]
-    - [[#ergotravel][ergotravel]]
-    - [[#for_science][for_science]]
-    - [[#gergo][gergo]]
-    - [[#handwireddactyl_manuform4x5][handwired/dactyl_manuform/4x5]]
-    - [[#handwireddactyl_manuform5x6][handwired/dactyl_manuform/5x6]]
-    - [[#keebioiris][keebio/iris]]
-    - [[#keyboardioatreus][keyboardio/atreus]]
-    - [[#kyria][kyria]]
-    - [[#lily58][lily58]]
-    - [[#moonlander][moonlander]]
-    - [[#redox_w][redox_w]]
-    - [[#sofle][sofle]]
-    - [[#torn][torn]]
-  - [[#customisation][Customisation]]
-    - [[#examples][Examples]]
-- [[#experimental-features][Experimental Features]]
-  - [[#bilateral-combinations][Bilateral Combinations]]
-  - [[#retro-shift][Retro Shift]]
-- [[#documentation][Documentation]]
-- [[#contact][Contact]]
-
-* Layout
-
-** General Principles
+*** General Principles
 
 - Use layers instead of reaching.
 - Use both hands instead of contortions.
@@ -104,7 +44,7 @@ Additional implementations and visualisations are provided outside QMK in the
 - Avoid unnecessary complication.
 
 
-** Details
+*** Details
 
 - 5 columns, 3 rows, 3 thumb keys, 2 hands.
 - Can be used on almost any split or non-split ergo or ortho keyboard.
@@ -134,7 +74,7 @@ Additional implementations and visualisations are provided outside QMK in the
 - Auto Shift for numbers and symbols.
 
 
-** Layers
+*** Layers
 
 [[https://raw.githubusercontent.com/manna-harbour/miryoku/master/data/layers/miryoku-kle-reference.png]]
 
@@ -154,7 +94,7 @@ Mods (and reset) will be available on sub layers on the same hand as the layer
 change thumb key.  Unknown names are considered to be layer names.
 
 
-*** Base
+**** Base
 
 [[https://raw.githubusercontent.com/manna-harbour/miryoku/master/data/layers/miryoku-kle-base.png]]
 
@@ -165,10 +105,10 @@ backspace, enter, delete on the right and space, tab, escape on the left.
 Alternative alpha arrangements are also available.
 
 
-**** Tap
+***** Tap
 
 
-***** Alphas
+****** Alphas
 
 #+NAME: colemakdh
 | Q     | W     | F     | P     | B     | J     | L     | U     | Y     | '     |
@@ -176,13 +116,13 @@ Alternative alpha arrangements are also available.
 | Z     | X     | C     | D     | V     | K     | H     | ,     | DOT   | /     |
 
 
-***** Thumbs
+****** Thumbs
 
 #+NAME: thumbs
 | U_NP  | U_NP  | ESC   | SPC   | TAB   | ENT   | BSPC  | DEL   | U_NP  | U_NP  |
 
 
-**** Hold
+***** Hold
 
 #+NAME: hold
 | RESET  |        |        |        |        |        |        |        |        | RESET  |
@@ -191,7 +131,7 @@ Alternative alpha arrangements are also available.
 | U_NP   | U_NP   | MEDIA  | NAV    | MOUSE  | SYM    | NUM    | FUN    | U_NP   | U_NP   |
 
 
-*** Nav
+**** Nav
 
 [[https://raw.githubusercontent.com/manna-harbour/miryoku/master/data/layers/miryoku-kle-nav.png]]
 
@@ -210,7 +150,7 @@ available.
 | ENT   | BSPC  | DEL   | U_NP  | U_NP  |
 
 
-*** Mouse
+**** Mouse
 
 [[https://raw.githubusercontent.com/manna-harbour/miryoku/master/data/layers/miryoku-kle-mouse.png]]
 
@@ -227,6 +167,7 @@ layer.
 | BTN1  | BTN3  | BTN2  | U_NP  | U_NP  |
 
 
+<<<<<<< HEAD
 *** Button
 
 [[https://raw.githubusercontent.com/manna-harbour/miryoku/master/data/layers/miryoku-kle-button.png]]
@@ -237,6 +178,18 @@ automatic activation depending on hardware and configuration.  It can also be
 activated manually by holding a bottom row pinkie key (however GUI and Undo will
 be unavailable).
 
+=======
+**** Button
+
+[[https://raw.githubusercontent.com/manna-harbour/miryoku/master/data/layers/miryoku-kle-button.png]]
+
+Provides mouse buttons, mods, and clipboard keys for use with integrated or
+external pointing devices, used with either hand.  The layer is available for
+automatic activation depending on hardware and configuration.  It can also be
+activated manually by holding a bottom row pinkie key (however GUI and Undo will
+be unavailable).
+
+>>>>>>> 7cc8b32f1a5930a8e26c13c2a0632ef713de9a67
 #+NAME: button
 | U_UND | U_CUT | U_CPY | U_PST | U_RDO | U_RDO | U_PST | U_CPY | U_CUT | U_UND |
 | LGUI  | LALT  | LCTL  | LSFT  |       |       | LSFT  | LCTL  | LALT  | LGUI  |
@@ -244,7 +197,7 @@ be unavailable).
 | U_NP  | U_NP  | BTN2  | BTN3  | BTN1  | BTN1  | BTN3  | BTN2  | U_NP  | U_NP  |
 
 
-*** Media
+**** Media
 
 [[https://raw.githubusercontent.com/manna-harbour/miryoku/master/data/layers/miryoku-kle-media.png]]
 
@@ -260,7 +213,7 @@ available for other related functions.
 | MSTP    | MPLY    | MUTE    | U_NP    | U_NP    |
 
 
-*** Num
+**** Num
 
 [[https://raw.githubusercontent.com/manna-harbour/miryoku/master/data/layers/miryoku-kle-num.png]]
 
@@ -275,7 +228,7 @@ Dot is duplicated from the base layer.
 | U_NP | U_NP | DOT  | 0    | MINS |
 
 
-*** Sym
+**** Sym
 
 [[https://raw.githubusercontent.com/manna-harbour/miryoku/master/data/layers/miryoku-kle-sym.png]]
 
@@ -290,7 +243,7 @@ next to close parenthesis.
 | U_NP | U_NP | (    | )    | _    |
 
 
-*** Fun
+**** Fun
 
 [[https://raw.githubusercontent.com/manna-harbour/miryoku/master/data/layers/miryoku-kle-fun.png]]
 
@@ -307,19 +260,29 @@ the base layer to enable auto-repeat.
 | U_NP | U_NP | APP  | SPC  | TAB  |
 
 
-*** Alternative Layouts
+**** Alternative Layouts
 
 The defaults are recommended, but alternative layouts are provided to
 accommodate existing muscle memory and platform differences.
 
 
-**** Alphas
+***** Alphas
 
 To select, append the corresponding option to the ~make~ command line when
 building, e.g. ~MIRYOKU_ALPHAS=QWERTY~.
 
 
-***** Colemak
+****** AZERTY
+
+~MIRYOKU_ALPHAS=AZERTY~
+
+#+NAME: azerty
+| A    | Z    | E    | R    | T    | Y    | U    | I    | O    | P    |
+| Q    | S    | D    | F    | G    | H    | J    | K    | L    | M    |
+| W    | X    | C    | V    | B    | N    | ,    | DOT  | /    | '    |
+
+
+****** Colemak
 
 ~MIRYOKU_ALPHAS=COLEMAK~
 
@@ -329,7 +292,7 @@ building, e.g. ~MIRYOKU_ALPHAS=QWERTY~.
 | Z    | X    | C    | V    | B    | K    | M    | ,    | DOT  | /    |
 
 
-***** Colemak Mod-DHk
+****** Colemak Mod-DHk
 
 ~MIRYOKU_ALPHAS=COLEMAKDHK~
 
@@ -339,7 +302,7 @@ building, e.g. ~MIRYOKU_ALPHAS=QWERTY~.
 | Z    | X    | C    | D    | V    | M    | H    | ,    | DOT  | /    |
 
 
-***** Dvorak
+****** Dvorak
 
 ~MIRYOKU_ALPHAS=DVORAK~
 
@@ -349,7 +312,7 @@ building, e.g. ~MIRYOKU_ALPHAS=QWERTY~.
 | /    | Q    | J    | K    | X    | B    | M    | W    | V    | Z    |
 
 
-***** Halmak
+****** Halmak
 
 ~MIRYOKU_ALPHAS=HALMAK~
 
@@ -359,7 +322,7 @@ building, e.g. ~MIRYOKU_ALPHAS=QWERTY~.
 | F    | M    | V    | C    | /    | G    | P    | X    | K    | Y    |
 
 
-***** Workman
+****** Workman
 
 ~MIRYOKU_ALPHAS=WORKMAN~
 
@@ -369,7 +332,7 @@ building, e.g. ~MIRYOKU_ALPHAS=QWERTY~.
 | Z    | X    | M    | C    | V    | K    | L    | ,    | DOT  | /    |
 
 
-***** QWERTY
+****** QWERTY
 
 ~MIRYOKU_ALPHAS=QWERTY~
 
@@ -379,16 +342,26 @@ building, e.g. ~MIRYOKU_ALPHAS=QWERTY~.
 | Z    | X    | C    | V    | B    | N    | M    | ,    | DOT  | /    |
 
 
-**** Nav
+****** QWERTZ
+
+~MIRYOKU_ALPHAS=QWERTZ~
+
+#+NAME: qwertz
+| Q    | W    | E    | R    | T    | Z    | U    | I    | O    | P    |
+| A    | S    | D    | F    | G    | H    | J    | K    | L    | '    |
+| Y    | X    | C    | V    | B    | N    | M    | ,    | DOT  | /    |
 
 
-***** vi-Style
+***** Nav
+
+
+****** vi-Style
 
 To select, append ~MIRYOKU_NAV=VI~ to the ~make~ command line when building.
 Not available with ~MIRYOKU_LAYERS=FLIP~.
 
 
-****** Nav
+******* Nav
 
 #+NAME: nav-r-vi
 | U_RDO | U_PST | U_CPY | U_CUT | U_UND |
@@ -397,7 +370,7 @@ Not available with ~MIRYOKU_LAYERS=FLIP~.
 | ENT   | BSPC  | DEL   | U_NP  | U_NP  |
 
 
-****** Mouse
+******* Mouse
 
 #+NAME: mouse-r-vi
 | U_RDO | U_PST | U_CPY | U_CUT | U_UND |
@@ -406,7 +379,7 @@ Not available with ~MIRYOKU_LAYERS=FLIP~.
 | BTN1  | BTN3  | BTN2  | U_NP  | U_NP  |
 
 
-****** Media
+******* Media
 
 #+NAME: media-r-vi
 | RGB_TOG | RGB_MOD | RGB_HUI | RGB_SAI | RGB_VAI |
@@ -415,7 +388,7 @@ Not available with ~MIRYOKU_LAYERS=FLIP~.
 | MSTP    | MPLY    | MUTE    | U_NP    | U_NP    |
 
 
-***** Inverted-T
+****** Inverted-T
 
 [[https://raw.githubusercontent.com/manna-harbour/miryoku/master/data/layers/miryoku-kle-reference-flip-invertedt.png]]
 
@@ -423,7 +396,7 @@ To select, append ~MIRYOKU_NAV=INVERTEDT~ to the ~make~ command line when
 building.  Only available with ~MIRYOKU_LAYERS=FLIP~.
 
 
-****** Nav
+******* Nav
 
 #+NAME: nav-l-invertedt
 | PGUP  | HOME  | UP    | END   | INS   |
@@ -432,7 +405,7 @@ building.  Only available with ~MIRYOKU_LAYERS=FLIP~.
 | U_NP  | U_NP  | DEL   | BSPC  | ENT   |
 
 
-****** Mouse
+******* Mouse
 
 #+NAME: mouse-l-invertedt
 | WH_U  | WH_L  | MS_U  | WH_R  |       |
@@ -441,7 +414,7 @@ building.  Only available with ~MIRYOKU_LAYERS=FLIP~.
 | U_NP  | U_NP  | BTN2  | BTN3  | BTN1  |
 
 
-****** Media
+******* Media
 
 #+NAME: media-l-invertedt
 |         |         | VOLU    |         |         |
@@ -450,7 +423,7 @@ building.  Only available with ~MIRYOKU_LAYERS=FLIP~.
 | U_NP    | U_NP    | MUTE    | MPLY    | MSTP    |
 
 
-**** Clipboard
+***** Clipboard
 
 Keycodes are translated according to the following tables.
 
@@ -463,7 +436,7 @@ To select, append the corresponding option to the ~make~ command line when
 building, e.g. ~MIRYOKU_CLIPBOARD=WIN~.
 
 
-***** Default
+****** Default
 
 #+NAME: clipboard
 | U_RDO | AGIN      |
@@ -473,7 +446,7 @@ building, e.g. ~MIRYOKU_CLIPBOARD=WIN~.
 | U_UND | UNDO   |
 
 
-***** Fun Cluster
+****** Fun Cluster
 
 ~MIRYOKU_CLIPBOARD=FUN~
 
@@ -485,7 +458,7 @@ building, e.g. ~MIRYOKU_CLIPBOARD=WIN~.
 | U_UND | UNDO |
 
 
-***** Mac
+****** Mac
 
 ~MIRYOKU_CLIPBOARD=MAC~
 
@@ -497,7 +470,7 @@ building, e.g. ~MIRYOKU_CLIPBOARD=WIN~.
 | U_UND | LCMD(KC_Z) |
 
 
-***** Windows
+****** Windows
 
 ~MIRYOKU_CLIPBOARD=WIN~
 
@@ -509,23 +482,23 @@ building, e.g. ~MIRYOKU_CLIPBOARD=WIN~.
 | U_UND | C(KC_Z) |
 
 
-**** Layers
+***** Layers
 
 
-***** Flip
+****** Flip
 
 Flip base layer thumb keys and sub layers between right and left hands.
 
 To select, append ~MIRYOKU_LAYERS=FLIP~ to the ~make~ command line when building.
 
 
-****** Thumbs
+******* Thumbs
 
 #+NAME: thumbs-flip
 | U_NP | U_NP | DEL  | BSPC | ENT  | TAB  | SPC  | ESC  | U_NP | U_NP |
 
 
-****** Hold
+******* Hold
 
 #+NAME: hold-flip
 | RESET  |        |        |        |        |        |        |        |        | RESET  |
@@ -534,7 +507,7 @@ To select, append ~MIRYOKU_LAYERS=FLIP~ to the ~make~ command line when building
 | U_NP   | U_NP   | FUN    | NUM    | SYM    | MOUSE  | NAV    | MEDIA  | U_NP   | U_NP   |
 
 
-****** Nav
+******* Nav
 
 #+NAME: nav-l
 | HOME  | PGDN  | PGUP  | END   | INS   |
@@ -543,7 +516,7 @@ To select, append ~MIRYOKU_LAYERS=FLIP~ to the ~make~ command line when building
 | U_NP  | U_NP  | DEL   | BSPC  | ENT   |
 
 
-****** Mouse
+******* Mouse
 
 #+NAME: mouse-l
 | WH_L  | WH_D  | WH_U  | WH_R  |       |
@@ -552,7 +525,11 @@ To select, append ~MIRYOKU_LAYERS=FLIP~ to the ~make~ command line when building
 | U_NP  | U_NP  | BTN2  | BTN3  | BTN1  |
 
 
+<<<<<<< HEAD
 ****** Media
+=======
+******* Media
+>>>>>>> 7cc8b32f1a5930a8e26c13c2a0632ef713de9a67
 
 #+NAME: media-l
 | RGB_MOD | RGB_HUI | RGB_SAI | RGB_VAI | RGB_TOG |
@@ -561,7 +538,7 @@ To select, append ~MIRYOKU_LAYERS=FLIP~ to the ~make~ command line when building
 | U_NP    | U_NP    | MUTE    | MPLY    | MSTP    |
 
 
-****** Num
+******* Num
 
 #+NAME: num-r
 | [    | 7    | 8    | 9    | ]    |
@@ -570,7 +547,7 @@ To select, append ~MIRYOKU_LAYERS=FLIP~ to the ~make~ command line when building
 | MINS | 0    | DOT  | U_NP | U_NP |
 
 
-****** Sym
+******* Sym
 
 #+NAME: sym-r
 | {    | &    | *    | (    | }    |
@@ -579,7 +556,7 @@ To select, append ~MIRYOKU_LAYERS=FLIP~ to the ~make~ command line when building
 | _    | (    | )    | U_NP | U_NP |
 
 
-****** Fun
+******* Fun
 
 #+NAME: fun-r
 | PSCR | F7   | F8   | F9   | F12  |
@@ -588,7 +565,7 @@ To select, append ~MIRYOKU_LAYERS=FLIP~ to the ~make~ command line when building
 | TAB  | SPC  | APP  | U_NP | U_NP |
 
 
-*** COMMENT Templates
+**** COMMENT Templates
 
 #+NAME: tem
 | <l4> | <l4> | <l4> | <l4> | <l4> | <l4> | <l4> | <l4> | <l4> | <l4> |
@@ -618,13 +595,16 @@ Duplicate base layer tap keys on thumbs rather than trans to enable auto-repeat.
 | U_NP | U_NP | ESC  | SPC  | TAB  |
 
 
-* Code Generation
+** Code Generation
+
+The layout is maintained in emacs org-mode tables and converted to QMK keymap
+data structures using embedded python scripts.
 
 
-** Table Conversion Scripts
+*** Table Conversion Scripts
 
 
-*** table-layout-taphold
+**** table-layout-taphold
 
 Produce base layer from separate tap and hold tables.
 
@@ -666,7 +646,7 @@ return results
 :     U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(NAV, KC_SPC),   LT(MOUSE, KC_TAB), LT(SYM, KC_ENT),   LT(NUM, KC_BSPC),  LT(FUN, KC_DEL),   U_NP,              U_NP
 
 
-*** table-layout-half
+**** table-layout-half
 
 Produce sub layers given layer name and corresponding table for single hand and
 incorporating mods and reset from base layer.  Layer names must end with 'R' or
@@ -723,7 +703,7 @@ return results
 :     U_NP,    U_NP,    U_NA,    U_NA,    U_NA,    KC_ENT,  KC_BSPC, KC_DEL,  U_NP,    U_NP
 
 
-*** table-layout-full
+**** table-layout-full
 
 Produce full layer from single table.  Fill for unused keys is configurable.
 
@@ -760,7 +740,7 @@ return results
 :     U_NP,    U_NP,    KC_BTN2, KC_BTN3, KC_BTN1, KC_BTN1, KC_BTN3, KC_BTN2, U_NP,    U_NP
 
 
-*** table-enums
+**** table-enums
 
 Produce layer enums from layer names in hold table.
 
@@ -780,7 +760,7 @@ return results
 : enum layers { BASE, BUTTON, MEDIA, NAV, MOUSE, SYM, NUM, FUN };
 
 
-*** table-keycode-mappings
+**** table-keycode-mappings
 
 Produce keycode mappings according to the provided table.
 
@@ -813,7 +793,7 @@ return results
 : #define U_UND KC_UNDO
 
 
-*** COMMENT python-version
+**** COMMENT python-version
 
 C-c C-c in code block to update
 
@@ -824,14 +804,14 @@ return sys.version
 #+END_SRC
 
 #+RESULTS: python-version
-: 3.9.4 (default, Apr  9 2021, 01:15:05) 
+: 3.9.4 (default, Apr  9 2021, 01:15:05)
 : [GCC 5.4.0 20160609]
 
 
-** Data
+*** Data
 
 
-*** symbol-names
+**** symbol-names
 
 Symbol, name, and shifted symbol mappings for use in tables.
 
@@ -859,7 +839,7 @@ Symbol, name, and shifted symbol mappings for use in tables.
 | 0    | 0    | )    | RPRN |
 
 
-*** mods
+**** mods
 
 Modifiers usable in hold table.  Need to have the same name for ~KC_~ and ~_T~
 versions.
@@ -868,7 +848,7 @@ versions.
 | LSFT | LCTL | LALT | LGUI | ALGR |
 
 
-*** nonkc
+**** nonkc
 
 Keycodes that match any of these prefixes will not have ~KC_~ automatically
 prepended.
@@ -877,7 +857,7 @@ prepended.
 | U_ | RGB_ | RESET | S( | C( | SCMD( | LCMD( |
 
 
-*** header
+**** header
 
 Header for tangled files.
 
@@ -889,7 +869,7 @@ generated from users/manna-harbour_miryoku/miryoku.org  -*- buffer-read-only: t 
 #+END_SRC
 
 
-*** license-qmk
+**** license-qmk
 
 License for tangled QMK C source files.
 
@@ -899,20 +879,21 @@ License for tangled QMK C source files.
 #+END_SRC
 
 
-* Subset Mapping
+** Subset Mapping
 
 The keymap, build options, and configuration are shared between keyboards.  The
-layout is mapped onto keyboards with different physical layouts as a subset.
+layout is mapped onto keyboards with different physical layouts as a subset
+without code duplication using the QMK userspace feature and C macros.
 
 
-** Userspace
+*** Userspace
 
 The keymap is defined for ~LAYOUT_miryoku~ which is 10x4, with the outer 2
 positions on the bottom row unused and the rest of the bottom row being the
 thumb keys.
 
 
-*** [[./rules.mk][users/manna-harbour_miryoku/rules.mk]]
+**** [[./rules.mk][users/manna-harbour_miryoku/rules.mk]]
 
 Build options.  Automatically included.
 
@@ -954,7 +935,7 @@ endif
 #+END_SRC
 
 
-*** [[./config.h][users/manna-harbour_miryoku/config.h]]
+**** [[./config.h][users/manna-harbour_miryoku/config.h]]
 
 Config options.  Automatically included.
 
@@ -997,7 +978,7 @@ Config options.  Automatically included.
 #+END_SRC
 
 
-*** [[./manna-harbour_miryoku.h][users/manna-harbour_miryoku/manna-harbour_miryoku.h]]
+**** [[./manna-harbour_miryoku.h][users/manna-harbour_miryoku/manna-harbour_miryoku.h]]
 
 Keymap-related definitions.  Included from ~manna-harbour_miryoku.c~.  Can be
 included from keymap or layout ~keymap.c~ if needed.
@@ -1031,7 +1012,7 @@ included from keymap or layout ~keymap.c~ if needed.
 #+END_SRC
 
 
-*** [[./manna-harbour_miryoku.c][users/manna-harbour_miryoku/manna-harbour_miryoku.c]]
+**** [[./manna-harbour_miryoku.c][users/manna-harbour_miryoku/manna-harbour_miryoku.c]]
 
 Contains the keymap.  Added from ~rules.mk~.
 
@@ -1045,7 +1026,9 @@ Contains the keymap.  Added from ~rules.mk~.
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #if defined MIRYOKU_LAYERS_FLIP
   [BASE] = LAYOUT_miryoku(
-  #if defined MIRYOKU_ALPHAS_COLEMAK
+  #if defined MIRYOKU_ALPHAS_AZERTY
+<<table-layout-taphold(alphas_table=azerty, thumbs_table=thumbs-flip, hold_table=hold-flip)>>
+  #elif defined MIRYOKU_ALPHAS_COLEMAK
 <<table-layout-taphold(alphas_table=colemak, thumbs_table=thumbs-flip, hold_table=hold-flip)>>
   #elif defined MIRYOKU_ALPHAS_COLEMAKDHK
 <<table-layout-taphold(alphas_table=colemakdhk, thumbs_table=thumbs-flip, hold_table=hold-flip)>>
@@ -1057,6 +1040,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 <<table-layout-taphold(alphas_table=workman, thumbs_table=thumbs-flip, hold_table=hold-flip)>>
   #elif defined MIRYOKU_ALPHAS_QWERTY
 <<table-layout-taphold(alphas_table=qwerty, thumbs_table=thumbs-flip, hold_table=hold-flip)>>
+  #elif defined MIRYOKU_ALPHAS_QWERTZ
+<<table-layout-taphold(alphas_table=qwertz, thumbs_table=thumbs-flip, hold_table=hold-flip)>>
   #else
 <<table-layout-taphold(alphas_table=colemakdh, thumbs_table=thumbs-flip, hold_table=hold-flip)>>
   #endif
@@ -1093,7 +1078,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 #else
   [BASE] = LAYOUT_miryoku(
-  #if defined MIRYOKU_ALPHAS_COLEMAK
+  #if defined MIRYOKU_ALPHAS_AZERTY
+<<table-layout-taphold(alphas_table=azerty)>>
+  #elif defined MIRYOKU_ALPHAS_COLEMAK
 <<table-layout-taphold(alphas_table=colemak)>>
   #elif defined MIRYOKU_ALPHAS_COLEMAKDHK
 <<table-layout-taphold(alphas_table=colemakdhk)>>
@@ -1105,6 +1092,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 <<table-layout-taphold(alphas_table=workman)>>
   #elif defined MIRYOKU_ALPHAS_QWERTY
 <<table-layout-taphold(alphas_table=qwerty)>>
+  #elif defined MIRYOKU_ALPHAS_QWERTZ
+<<table-layout-taphold(alphas_table=qwertz)>>
   #else
 <<table-layout-taphold(alphas_table=colemakdh)>>
   #endif
@@ -1147,7 +1136,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #+END_SRC
 
 
-** Layouts
+*** Layouts
 
 To use the keymap on a keyboard supporting the layouts feature, ~LAYOUT_miryoku~
 is defined as a macro mapping onto the layout's own ~LAYOUT~ macro, leaving the
@@ -1163,7 +1152,7 @@ make planck/rev6:manna-harbour_miryoku:flash FORCE_LAYOUT=ortho_4x12 # ortho_4x1
 #+END_SRC
 
 
-*** 60_ansi
+**** 60_ansi
 
 An angled ortho split layout is mapped onto the row-staggered keyboard.  The
 rows are moved up to better position the thumb keys, the hands are separated as
@@ -1178,6 +1167,11 @@ command line when building.
 
 [[https://raw.githubusercontent.com/manna-harbour/miryoku/master/data/mapping/miryoku-kle-mapping-60_ansi-noreverseangle.png]]
 
+Another alternative subset mapping is provided mapping only the 3x10 alphas,
+plus spacebar for space / Nav, with the remainder being the default 60_ansi
+keymap with semicolon in place of quote. To select this mapping, append
+~MIRYOKU_MAPPING=LITE~ to the ~make~ command line when building.
+
 Keyboards supporting this layout: alps64, amj60, bakeneko60, bm60poker, bm60rgb, do60, dp60, dz60, facew, gskt00, infinity60, jm60, kc60, kc60se, ok60, org60, paladin64, panc60, reviung61, smk60, v60_type_r, yd60mq, 1upkeyboards/1up60hse, 1upkeyboards/1up60rgb, 40percentclub/luddite, acheron/keebspcb, acheron/lasgweloth, ai03/polaris, akegata_denki/device_one, atxkb/1894, bioi/g60ble, bt66tech/bt66tech60, cannonkeys/an_c, cannonkeys/instant60, cannonkeys/practice60, clawsome/coupe, dm9records/tartan, duck/eagle_viper, evyd13/plain60, exclusive/e6_rgb, gh60/revc, gh60/satan, gh60/v1p3, handwired/xealousbrown, hineybush/h60, hs60/v1, keebio/wtf60, noxary/260, playkbtw/pk60, ryloo_studio/m0110, thevankeyboards/bananasplit, wilba_tech/zeal60, xd60/rev2, xd60/rev3, cannonkeys/db60/hotswap, cannonkeys/db60/j02, cannonkeys/db60/rev2, exclusive/e6v2/le, exclusive/e6v2/oe, foxlab/leaf60/universal, handwired/co60/rev1, handwired/co60/rev7, handwired/swiftrax/nodu, hs60/v2/ansi, inett_studio/sqx/universal, melgeek/mj61/rev1, melgeek/mj61/rev2, melgeek/mj63/rev1, melgeek/mj63/rev2, sentraq/s60_x/default, sentraq/s60_x/rgb.
 
 Example build command lines:
@@ -1185,10 +1179,11 @@ Example build command lines:
 #+BEGIN_SRC sh :tangle no
 make dz60:manna-harbour_miryoku:flash # dz60
 make dz60:manna-harbour_miryoku:flash MIRYOKU_MAPPING=NOREVERSEANGLE  # dz60, without reverse column angle
+make dz60:manna-harbour_miryoku:flash MIRYOKU_MAPPING=LITE  # dz60, with lite mapping
 #+END_SRC
 
 
-**** [[../../layouts/community/60_ansi/manna-harbour_miryoku/config.h][layouts/community/60_ansi/manna-harbour_miryoku/config.h]]
+***** [[../../layouts/community/60_ansi/manna-harbour_miryoku/config.h][layouts/community/60_ansi/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
@@ -1202,7 +1197,7 @@ Contains subset mapping.
 #define XXX KC_NO
 
 #if defined MIRYOKU_MAPPING_NOREVERSEANGLE
-#define LAYOUT_miryoku(\
+  #define LAYOUT_miryoku(\
 K00,  K01,  K02,  K03,  K04,                    K05,  K06,  K07,  K08,  K09,\
 K10,  K11,  K12,  K13,  K14,                    K15,  K16,  K17,  K18,  K19,\
 K20,  K21,  K22,  K23,  K24,                    K25,  K26,  K27,  K28,  K29,\
@@ -1215,8 +1210,38 @@ K00,  K01,  K02,  K03,  K04,  XXX,  XXX,  XXX,  K05,  K06,  K07,  K08,  K09,  XX
   XXX,        K32,  K33,  K34,  XXX,  XXX,  XXX,  XXX,  K35,  K36,  K37,  XXX,\
   XXX,  XXX,  XXX,              XXX,              XXX,  XXX,        XXX,  XXX\
 )
+#elif defined MIRYOKU_MAPPING_LITE
+  #if defined MIRYOKU_LAYERS_FLIP
+    #define LAYOUT_miryoku( \
+         K00,     K01,     K02,     K03,     K04,     K05,     K06,     K07,     K08,     K09, \
+         K10,     K11,     K12,     K13,     K14,     K15,     K16,     K17,     K18,     K19, \
+         K20,     K21,     K22,     K23,     K24,     K25,     K26,     K27,     K28,     K29, \
+         N30,     N31,     K32,     K33,     K34,     K35,     K36,     K37,     N38,     N39 \
+) \
+LAYOUT_60_ansi( \
+KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, \
+KC_TAB,  K00,     K01,     K02,     K03,     K04,     K05,     K06,     K07,     K08,     K09,     KC_LBRC, KC_RBRC, KC_BSLS, \
+KC_CAPS, K10,     K11,     K12,     K13,     K14,     K15,     K16,     K17,     K18,     K19,     KC_SCLN, KC_ENT, \
+KC_LSFT, K20,     K21,     K22,     K23,     K24,     K25,     K26,     K27,     K28,     K29,     KC_RSFT, \
+KC_LCTL, KC_LGUI, KC_LALT,                            K36,                                KC_RALT, KC_RGUI, KC_APP,  KC_RCTL \
+)
+  #else
+    #define LAYOUT_miryoku( \
+         K00,     K01,     K02,     K03,     K04,     K05,     K06,     K07,     K08,     K09, \
+         K10,     K11,     K12,     K13,     K14,     K15,     K16,     K17,     K18,     K19, \
+         K20,     K21,     K22,     K23,     K24,     K25,     K26,     K27,     K28,     K29, \
+         N30,     N31,     K32,     K33,     K34,     K35,     K36,     K37,     N38,     N39 \
+) \
+LAYOUT_60_ansi( \
+KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS, KC_EQL,  KC_BSPC, \
+KC_TAB,  K00,     K01,     K02,     K03,     K04,     K05,     K06,     K07,     K08,     K09,     KC_LBRC, KC_RBRC, KC_BSLS, \
+KC_CAPS, K10,     K11,     K12,     K13,     K14,     K15,     K16,     K17,     K18,     K19,     KC_SCLN, KC_ENT, \
+KC_LSFT, K20,     K21,     K22,     K23,     K24,     K25,     K26,     K27,     K28,     K29,     KC_RSFT, \
+KC_LCTL, KC_LGUI, KC_LALT,                            K33,                                         KC_RALT, KC_RGUI, KC_APP,  KC_RCTL \
+)
+  #endif
 #else
-#define LAYOUT_miryoku(\
+  #define LAYOUT_miryoku(\
             K00,  K01,  K02,  K03,  K04,        K05,  K06,  K07,  K08,  K09,\
             K10,  K11,  K12,  K13,  K14,        K15,  K16,  K17,  K18,  K19,\
             K20,  K21,  K22,  K23,  K24,        K25,  K26,  K27,  K28,  K29,\
@@ -1233,7 +1258,7 @@ XXX,  XXX,  K00,  K01,  K02,  K03,  K04,  XXX,  K05,  K06,  K07,  K08,  K09,  XX
 #+END_SRC
 
 
-**** [[../../layouts/community/60_ansi/manna-harbour_miryoku/keymap.c][layouts/community/60_ansi/manna-harbour_miryoku/keymap.c]]
+***** [[../../layouts/community/60_ansi/manna-harbour_miryoku/keymap.c][layouts/community/60_ansi/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
@@ -1244,7 +1269,7 @@ Required by the build system.
 #+END_SRC
 
 
-*** ergodox
+**** ergodox
 
 For the ergodox layout, the main 5x3 alphas are used as usual. The primary and
 secondary thumb keys are the inner and outer 2u thumb keys and the tertiary
@@ -1263,7 +1288,7 @@ make ergodox_ez:manna-harbour_miryoku:flash # ergodox_ez
 #+END_SRC
 
 
-**** [[../../layouts/community/ergodox/manna-harbour_miryoku/config.h][layouts/community/ergodox/manna-harbour_miryoku/config.h]]
+***** [[../../layouts/community/ergodox/manna-harbour_miryoku/config.h][layouts/community/ergodox/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
@@ -1295,7 +1320,7 @@ XXX, XXX, XXX, XXX, K32,                          K37, XXX, XXX, XXX, XXX,\
 #+END_SRC
 
 
-**** [[../../layouts/community/ergodox/manna-harbour_miryoku/keymap.c][layouts/community/ergodox/manna-harbour_miryoku/keymap.c]]
+***** [[../../layouts/community/ergodox/manna-harbour_miryoku/keymap.c][layouts/community/ergodox/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
@@ -1306,7 +1331,9 @@ Required by the build system.
 #+END_SRC
 
 
-*** ortho_4x10
+**** ortho_4x10
+
+An alternative with 180 degree rotation is also provided to enable the USB cable to be relocated for use with laptops.  To select this mapping, append ~MIRYOKU_MAPPING=ROTATE~ to the ~make~ command line when building.
 
 An alternative with 180 degree rotation is also provided to enable the USB cable to be relocated for use with laptops.  To select this mapping, append ~MIRYOKU_MAPPING=ROTATE~ to the ~make~ command line when building.
 
@@ -1320,7 +1347,7 @@ make pabile/p40:manna-harbour_miryoku:flash MIRYOKU_MAPPING=ROTATE # pabile/p40,
 #+END_SRC
 
 
-**** [[../../layouts/community/ortho_4x10/manna-harbour_miryoku/config.h][layouts/community/ortho_4x10/manna-harbour_miryoku/config.h]]
+***** [[../../layouts/community/ortho_4x10/manna-harbour_miryoku/config.h][layouts/community/ortho_4x10/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
@@ -1363,7 +1390,7 @@ XXX, XXX, K32, K33, K34, K35, K36, K37, XXX, XXX \
 #+END_SRC
 
 
-**** [[../../layouts/community/ortho_4x10/manna-harbour_miryoku/keymap.c][layouts/community/ortho_4x10/manna-harbour_miryoku/keymap.c]]
+***** [[../../layouts/community/ortho_4x10/manna-harbour_miryoku/keymap.c][layouts/community/ortho_4x10/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
@@ -1374,7 +1401,7 @@ Required by the build system.
 #+END_SRC
 
 
-*** ortho_4x12
+**** ortho_4x12
 
 For the ortho_4x12 layout, the middle two columns, and the 2 keys on each end of
 the bottom row are unused.  This allows the hands to be positioned without ulnar
@@ -1411,7 +1438,7 @@ make keebio/levinson:manna-harbour_miryoku:flash MIRYOKU_MAPPING=EXTENDED_THUMBS
 #+END_SRC
 
 
-**** [[../../layouts/community/ortho_4x12/manna-harbour_miryoku/config.h][layouts/community/ortho_4x12/manna-harbour_miryoku/config.h]]
+***** [[../../layouts/community/ortho_4x12/manna-harbour_miryoku/config.h][layouts/community/ortho_4x12/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
@@ -1465,7 +1492,7 @@ KC_NO, KC_NO, K32,   K33,   K34,   KC_NO, KC_NO, K35,   K36,   K37,   KC_NO, KC_
 #+END_SRC
 
 
-**** [[../../layouts/community/ortho_4x12/manna-harbour_miryoku/keymap.c][layouts/community/ortho_4x12/manna-harbour_miryoku/keymap.c]]
+***** [[../../layouts/community/ortho_4x12/manna-harbour_miryoku/keymap.c][layouts/community/ortho_4x12/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
@@ -1476,7 +1503,7 @@ Required by the build system.
 #+END_SRC
 
 
-*** ortho_5x12
+**** ortho_5x12
 
 As per ortho_4x12 but the top row is unused.
 
@@ -1493,7 +1520,7 @@ make keebio/nyquist/rev3:manna-harbour_miryoku:flash MIRYOKU_MAPPING=EXTENDED_TH
 #+END_SRC
 
 
-**** [[../../layouts/community/ortho_5x12/manna-harbour_miryoku/config.h][layouts/community/ortho_5x12/manna-harbour_miryoku/config.h]]
+***** [[../../layouts/community/ortho_5x12/manna-harbour_miryoku/config.h][layouts/community/ortho_5x12/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
@@ -1550,7 +1577,7 @@ KC_NO, KC_NO, K32,   K33,   K34,   KC_NO, KC_NO, K35,   K36,   K37,   KC_NO, KC_
 #+END_SRC
 
 
-**** [[../../layouts/community/ortho_5x12/manna-harbour_miryoku/keymap.c][layouts/community/ortho_5x12/manna-harbour_miryoku/keymap.c]]
+***** [[../../layouts/community/ortho_5x12/manna-harbour_miryoku/keymap.c][layouts/community/ortho_5x12/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
@@ -1561,7 +1588,7 @@ Required by the build system.
 #+END_SRC
 
 
-*** ortho_5x15
+**** ortho_5x15
 
 For the ortho_5x15 layout, the top row, middle 5 columns, and the 2 keys on each
 end of the bottom row are unused.  This allows the hands to be positioned
@@ -1587,7 +1614,7 @@ make idobo:manna-harbour_miryoku:flash # idobo
 #+END_SRC
 
 
-**** [[../../layouts/community/ortho_5x15/manna-harbour_miryoku/config.h][layouts/community/ortho_5x15/manna-harbour_miryoku/config.h]]
+***** [[../../layouts/community/ortho_5x15/manna-harbour_miryoku/config.h][layouts/community/ortho_5x15/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
@@ -1634,7 +1661,7 @@ XXX, XXX, K32, K33, K34, XXX, XXX, XXX, XXX, XXX, K35, K36, K37, XXX, XXX\
 #+RESULTS:
 
 
-**** [[../../layouts/community/ortho_5x15/manna-harbour_miryoku/keymap.c][layouts/community/ortho_5x15/manna-harbour_miryoku/keymap.c]]
+***** [[../../layouts/community/ortho_5x15/manna-harbour_miryoku/keymap.c][layouts/community/ortho_5x15/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
@@ -1645,7 +1672,7 @@ Required by the build system.
 #+END_SRC
 
 
-*** planck_mit
+**** planck_mit
 
 The middle two columns including the middle 2u key, and the 2 keys on each end
 of the bottom row are unused.
@@ -1660,7 +1687,7 @@ make planck/rev6:manna-harbour_miryoku:flash FORCE_LAYOUT=planck_mit # planck re
 
 #+END_SRC
 
-**** [[../../layouts/community/planck_mit/manna-harbour_miryoku/config.h][layouts/community/planck_mit/manna-harbour_miryoku/config.h]]
+***** [[../../layouts/community/planck_mit/manna-harbour_miryoku/config.h][layouts/community/planck_mit/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
@@ -1686,7 +1713,7 @@ KC_NO, KC_NO, K32,   K33,   K34,      KC_NO,     K35,   K36,   K37,   KC_NO, KC_
 #+END_SRC
 
 
-**** [[../../layouts/community/planck_mit/manna-harbour_miryoku/keymap.c][layouts/community/planck_mit/manna-harbour_miryoku/keymap.c]]
+***** [[../../layouts/community/planck_mit/manna-harbour_miryoku/keymap.c][layouts/community/planck_mit/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
@@ -1697,7 +1724,7 @@ Required by the build system.
 #+END_SRC
 
 
-*** split_3x5_3
+**** split_3x5_3
 
 Keyboards supporting this layout: arch_36, boardsource/microdox, centromere, crkbd, eek, miniaxe, minidox/rev1, pteron36, squiggle/rev1, suihankey/split/rev1.
 
@@ -1709,7 +1736,7 @@ make minidox:manna-harbour_miryoku:flash # minidox
 #+END_SRC
 
 
-**** [[../../layouts/community/split_3x5_3/manna-harbour_miryoku/config.h][layouts/community/split_3x5_3/manna-harbour_miryoku/config.h]]
+***** [[../../layouts/community/split_3x5_3/manna-harbour_miryoku/config.h][layouts/community/split_3x5_3/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
@@ -1735,7 +1762,7 @@ K20,   K21,   K22,   K23,   K24,          K25,   K26,   K27,   K28,   K29,\
 #+END_SRC
 
 
-**** [[../../layouts/community/split_3x5_3/manna-harbour_miryoku/keymap.c][layouts/community/split_3x5_3/manna-harbour_miryoku/keymap.c]]
+***** [[../../layouts/community/split_3x5_3/manna-harbour_miryoku/keymap.c][layouts/community/split_3x5_3/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
@@ -1746,7 +1773,7 @@ Required by the build system.
 #+END_SRC
 
 
-*** split_3x6_3
+**** split_3x6_3
 
 The outer columns are unused.
 
@@ -1760,7 +1787,7 @@ make crkbd:manna-harbour_miryoku:flash # crkbd
 #+END_SRC
 
 
-**** [[../../layouts/community/split_3x6_3/manna-harbour_miryoku/config.h][layouts/community/split_3x6_3/manna-harbour_miryoku/config.h]]
+***** [[../../layouts/community/split_3x6_3/manna-harbour_miryoku/config.h][layouts/community/split_3x6_3/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
@@ -1786,7 +1813,7 @@ KC_NO, K20,   K21,   K22,   K23,   K24,          K25,   K26,   K27,   K28,   K29
 #+END_SRC
 
 
-**** [[../../layouts/community/split_3x6_3/manna-harbour_miryoku/keymap.c][layouts/community/split_3x6_3/manna-harbour_miryoku/keymap.c]]
+***** [[../../layouts/community/split_3x6_3/manna-harbour_miryoku/keymap.c][layouts/community/split_3x6_3/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
@@ -1797,14 +1824,14 @@ Required by the build system.
 #+END_SRC
 
 
-** Keyboards
+*** Keyboards
 
 To use the keymap on a keyboard which does not support the layouts feature,
 ~LAYOUT_miryoku~ is defined as a macro mapping onto the keyboard's own ~LAYOUT~
 macro, leaving the unused keys as ~KC_NO~.
 
 
-*** atreus
+**** atreus
 
 Only the main 5x3 alphas and the inner 3 thumb keys are used.
 
@@ -1815,7 +1842,7 @@ make atreus:manna-harbour_miryoku:flash
 #+END_SRC
 
 
-**** [[../../keyboards/atreus/keymaps/manna-harbour_miryoku/config.h][keyboards/atreus/keymaps/manna-harbour_miryoku/config.h]]
+***** [[../../keyboards/atreus/keymaps/manna-harbour_miryoku/config.h][keyboards/atreus/keymaps/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
@@ -1843,7 +1870,7 @@ XXX, XXX, XXX, K32, K33, K34,      K35, K36, K37, XXX, XXX, XXX\
 #+END_SRC
 
 
-**** [[../../keyboards/atreus/keymaps/manna-harbour_miryoku/keymap.c][keyboards/atreus/keymaps/manna-harbour_miryoku/keymap.c]]
+***** [[../../keyboards/atreus/keymaps/manna-harbour_miryoku/keymap.c][keyboards/atreus/keymaps/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
@@ -1854,7 +1881,11 @@ Required by the build system.
 #+END_SRC
 
 
+<<<<<<< HEAD
 *** bastardkb/scylla
+=======
+**** bastardkb/scylla
+>>>>>>> 7cc8b32f1a5930a8e26c13c2a0632ef713de9a67
 
 To build for this keyboard,
 
@@ -1863,7 +1894,11 @@ make bastardkb/scylla:manna-harbour_miryoku:flash
 #+END_SRC
 
 
+<<<<<<< HEAD
 **** [[../../keyboards/bastardkb/scylla/keymaps/manna-harbour_miryoku/config.h][keyboards/bastardkb/scylla/keymaps/manna-harbour_miryoku/config.h]]
+=======
+***** [[../../keyboards/bastardkb/scylla/keymaps/manna-harbour_miryoku/config.h][keyboards/bastardkb/scylla/keymaps/manna-harbour_miryoku/config.h]]
+>>>>>>> 7cc8b32f1a5930a8e26c13c2a0632ef713de9a67
 
 Contains subset mapping.
 
@@ -1893,7 +1928,11 @@ XXX, K20, K21, K22, K23, K24,                K25, K26, K27, K28, K29, XXX, \
 #+END_SRC
 
 
+<<<<<<< HEAD
 **** [[../../keyboards/bastardkb/scylla/keymaps/manna-harbour_miryoku/keymap.c][keyboards/bastardkb/scylla/keymaps/manna-harbour_miryoku/keymap.c]]
+=======
+***** [[../../keyboards/bastardkb/scylla/keymaps/manna-harbour_miryoku/keymap.c][keyboards/bastardkb/scylla/keymaps/manna-harbour_miryoku/keymap.c]]
+>>>>>>> 7cc8b32f1a5930a8e26c13c2a0632ef713de9a67
 
 Required by the build system.
 
@@ -1904,7 +1943,11 @@ Required by the build system.
 #+END_SRC
 
 
+<<<<<<< HEAD
 *** ergotravel
+=======
+**** ergotravel
+>>>>>>> 7cc8b32f1a5930a8e26c13c2a0632ef713de9a67
 
 To build for this keyboard,
 
@@ -1913,7 +1956,7 @@ make ergotravel:manna-harbour_miryoku:flash
 #+END_SRC
 
 
-**** [[../../keyboards/ergotravel/keymaps/manna-harbour_miryoku/config.h][keyboards/ergotravel/keymaps/manna-harbour_miryoku/config.h]]
+***** [[../../keyboards/ergotravel/keymaps/manna-harbour_miryoku/config.h][keyboards/ergotravel/keymaps/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
@@ -1941,7 +1984,7 @@ XXX, XXX, XXX, K32,      K33, K34,       K35, K36,      K37, XXX, XXX, XXX  \
 #+END_SRC
 
 
-**** [[../../keyboards/ergotravel/keymaps/manna-harbour_miryoku/keymap.c][keyboards/ergotravel/keymaps/manna-harbour_miryoku/keymap.c]]
+***** [[../../keyboards/ergotravel/keymaps/manna-harbour_miryoku/keymap.c][keyboards/ergotravel/keymaps/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
@@ -1952,7 +1995,7 @@ Required by the build system.
 #+END_SRC
 
 
-*** for_science
+**** for_science
 
 The top row is unused.
 
@@ -1963,7 +2006,7 @@ make for_science:manna-harbour_miryoku:flash
 #+END_SRC
 
 
-**** [[../../keyboards/for_science/keymaps/manna-harbour_miryoku/config.h][keyboards/for_science/keymaps/manna-harbour_miryoku/config.h]]
+***** [[../../keyboards/for_science/keymaps/manna-harbour_miryoku/config.h][keyboards/for_science/keymaps/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
@@ -1992,7 +2035,7 @@ K20, K21, K22, K23, K24,     K25, K26, K27, K28, K29,\
 #+END_SRC
 
 
-**** [[../../keyboards/for_science/keymaps/manna-harbour_miryoku/keymap.c][keyboards/for_science/keymaps/manna-harbour_miryoku/keymap.c]]
+***** [[../../keyboards/for_science/keymaps/manna-harbour_miryoku/keymap.c][keyboards/for_science/keymaps/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
@@ -2003,7 +2046,7 @@ Required by the build system.
 #+END_SRC
 
 
-*** gergo
+**** gergo
 
 Only the main 5x3 alphas and the outer 3 thumb keys are used.
 
@@ -2014,7 +2057,7 @@ make gergo:manna-harbour_miryoku:flash
 #+END_SRC
 
 
-**** [[../../keyboards/gergo/keymaps/manna-harbour_miryoku/config.h][keyboards/gergo/keymaps/manna-harbour_miryoku/config.h]]
+***** [[../../keyboards/gergo/keymaps/manna-harbour_miryoku/config.h][keyboards/gergo/keymaps/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
@@ -2042,7 +2085,7 @@ XXX, K20, K21, K22, K23, K24, XXX, XXX,      XXX, XXX, K25, K26, K27, K28, K29, 
 #+END_SRC
 
 
-**** [[../../keyboards/gergo/keymaps/manna-harbour_miryoku/keymap.c][keyboards/gergo/keymaps/manna-harbour_miryoku/keymap.c]]
+***** [[../../keyboards/gergo/keymaps/manna-harbour_miryoku/keymap.c][keyboards/gergo/keymaps/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
@@ -2053,7 +2096,7 @@ Required by the build system.
 #+END_SRC
 
 
-*** handwired/dactyl_manuform/4x5
+**** handwired/dactyl_manuform/4x5
 
 Only the main 5x3 alphas and the main 3 thumb keys are used.
 
@@ -2064,7 +2107,7 @@ make handwired/dactyl_manuform/4x5:manna-harbour_miryoku:flash
 #+END_SRC
 
 
-**** [[../../keyboards/handwired/dactyl_manuform/4x5/keymaps/manna-harbour_miryoku/config.h][keyboards/handwired/dactyl_manuform/4x5/keymaps/manna-harbour_miryoku/config.h]]
+***** [[../../keyboards/handwired/dactyl_manuform/4x5/keymaps/manna-harbour_miryoku/config.h][keyboards/handwired/dactyl_manuform/4x5/keymaps/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
@@ -2095,7 +2138,7 @@ K20, K21, K22, K23, K24,                         K25, K26, K27, K28, K29,\
 #+END_SRC
 
 
-**** [[../../keyboards/handwired/dactyl_manuform/4x5/keymaps/manna-harbour_miryoku/keymap.c][keyboards/handwired/dactyl_manuform/4x5/keymaps/manna-harbour_miryoku/keymap.c]]
+***** [[../../keyboards/handwired/dactyl_manuform/4x5/keymaps/manna-harbour_miryoku/keymap.c][keyboards/handwired/dactyl_manuform/4x5/keymaps/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
@@ -2106,7 +2149,7 @@ Required by the build system.
 #+END_SRC
 
 
-*** handwired/dactyl_manuform/5x6
+**** handwired/dactyl_manuform/5x6
 
 Only the main 5x3 alphas and the main 3 thumb keys are used.
 
@@ -2117,7 +2160,7 @@ make handwired/dactyl_manuform/5x6:manna-harbour_miryoku:flash
 #+END_SRC
 
 
-**** [[../../keyboards/handwired/dactyl_manuform/5x6/keymaps/manna-harbour_miryoku/config.h][keyboards/handwired/dactyl_manuform/5x6/keymaps/manna-harbour_miryoku/config.h]]
+***** [[../../keyboards/handwired/dactyl_manuform/5x6/keymaps/manna-harbour_miryoku/config.h][keyboards/handwired/dactyl_manuform/5x6/keymaps/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
@@ -2149,7 +2192,7 @@ XXX, K20, K21, K22, K23, K24,                         K25, K26, K27, K28, K29, X
 #+END_SRC
 
 
-**** [[../../keyboards/handwired/dactyl_manuform/5x6/keymaps/manna-harbour_miryoku/keymap.c][keyboards/handwired/dactyl_manuform/5x6/keymaps/manna-harbour_miryoku/keymap.c]]
+***** [[../../keyboards/handwired/dactyl_manuform/5x6/keymaps/manna-harbour_miryoku/keymap.c][keyboards/handwired/dactyl_manuform/5x6/keymaps/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
@@ -2160,7 +2203,7 @@ Required by the build system.
 #+END_SRC
 
 
-*** keebio/iris
+**** keebio/iris
 
 Only the main 5x3 alphas and the bottom 3 thumb keys are used.
 
@@ -2171,7 +2214,7 @@ make keebio/iris/rev4:manna-harbour_miryoku:flash
 #+END_SRC
 
 
-**** [[../../keyboards/keebio/iris/keymaps/manna-harbour_miryoku/config.h][keyboards/keebio/iris/keymaps/manna-harbour_miryoku/config.h]]
+***** [[../../keyboards/keebio/iris/keymaps/manna-harbour_miryoku/config.h][keyboards/keebio/iris/keymaps/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
@@ -2200,7 +2243,7 @@ XXX, K20, K21, K22, K23, K24, XXX,      XXX, K25, K26, K27, K28, K29, XXX,\
 #+END_SRC
 
 
-**** [[../../keyboards/keebio/iris/keymaps/manna-harbour_miryoku/keymap.c][keyboards/keebio/iris/keymaps/manna-harbour_miryoku/keymap.c]]
+***** [[../../keyboards/keebio/iris/keymaps/manna-harbour_miryoku/keymap.c][keyboards/keebio/iris/keymaps/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
@@ -2211,7 +2254,7 @@ Required by the build system.
 #+END_SRC
 
 
-*** keyboardio/atreus
+**** keyboardio/atreus
 
 Only the main 5x3 alphas and the inner 3 thumb keys are used.
 
@@ -2222,7 +2265,7 @@ make keyboardio/atreus:manna-harbour_miryoku:flash
 #+END_SRC
 
 
-**** [[../../keyboards/keyboardio/atreus/keymaps/manna-harbour_miryoku/config.h][keyboards/keyboardio/atreus/keymaps/manna-harbour_miryoku/config.h]]
+***** [[../../keyboards/keyboardio/atreus/keymaps/manna-harbour_miryoku/config.h][keyboards/keyboardio/atreus/keymaps/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
@@ -2250,7 +2293,7 @@ XXX, XXX, XXX, K32, K33, K34,      K35, K36, K37, XXX, XXX, XXX \
 #+END_SRC
 
 
-**** [[../../keyboards/keyboardio/atreus/keymaps/manna-harbour_miryoku/keymap.c][keyboards/keyboardio/atreus/keymaps/manna-harbour_miryoku/keymap.c]]
+***** [[../../keyboards/keyboardio/atreus/keymaps/manna-harbour_miryoku/keymap.c][keyboards/keyboardio/atreus/keymaps/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
@@ -2261,7 +2304,214 @@ Required by the build system.
 #+END_SRC
 
 
-*** kyria
+**** lily58
+
+Only the main 5x3 alphas and the inner 3 thumb keys are used.
+
+To build for this keyboard,
+
+#+BEGIN_SRC sh :tangle no
+make lily58:manna-harbour_miryoku:flash
+#+END_SRC
+
+
+***** [[../../keyboards/lily58/keymaps/manna-harbour_miryoku/config.h][keyboards/lily58/keymaps/manna-harbour_miryoku/config.h]]
+
+Contains subset mapping.
+
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/lily58/keymaps/manna-harbour_miryoku/config.h
+// <<header>>
+
+<<license-qmk>>
+
+#pragma once
+
+#define XXX KC_NO
+
+#define LAYOUT_miryoku(\
+     K00, K01, K02, K03, K04,                K05, K06, K07, K08, K09,\
+     K10, K11, K12, K13, K14,                K15, K16, K17, K18, K19,\
+     K20, K21, K22, K23, K24,                K25, K26, K27, K28, K29,\
+     N30, N31, K32, K33, K34,                K35, K36, K37, N38, N39\
+)\
+LAYOUT(\
+XXX, XXX, XXX, XXX, XXX, XXX,                XXX, XXX, XXX, XXX, XXX, XXX,\
+XXX, K00, K01, K02, K03, K04,                K05, K06, K07, K08, K09, XXX,\
+XXX, K10, K11, K12, K13, K14,                K15, K16, K17, K18, K19, XXX,\
+XXX, K20, K21, K22, K23, K24, XXX,      XXX, K25, K26, K27, K28, K29, XXX,\
+               XXX, K32, K33, K34,      K35, K36, K37, XXX\
+)
+#+END_SRC
+
+
+***** [[../../keyboards/lily58/keymaps/manna-harbour_miryoku/keymap.c][keyboards/lily58/keymaps/manna-harbour_miryoku/keymap.c]]
+
+Required by the build system.
+
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/lily58/keymaps/manna-harbour_miryoku/keymap.c
+// <<header>>
+
+<<license-qmk>>
+#+END_SRC
+
+
+**** moonlander
+
+The main 5x3 alphas are used as usual. The primary, secondary, and tertiary
+thumb keys are the closest piano key, middle piano key, and the innermost key of
+the partial bottom row, respectively.  The remaining keys are unused.
+
+To build for this keyboard,
+
+#+BEGIN_SRC sh :tangle no
+make moonlander:manna-harbour_miryoku:flash
+#+END_SRC
+
+
+***** [[../../keyboards/moonlander/keymaps/manna-harbour_miryoku/config.h][keyboards/moonlander/keymaps/manna-harbour_miryoku/config.h]]
+
+Contains subset mapping.
+
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/moonlander/keymaps/manna-harbour_miryoku/config.h
+// <<header>>
+
+<<license-qmk>>
+
+#pragma once
+
+#define XXX KC_NO
+
+#define LAYOUT_miryoku(\
+     K00, K01, K02, K03, K04,               K05, K06, K07, K08, K09,\
+     K10, K11, K12, K13, K14,               K15, K16, K17, K18, K19,\
+     K20, K21, K22, K23, K24,               K25, K26, K27, K28, K29,\
+     N30, N31, K32, K33, K34,               K35, K36, K37, N38, N39\
+)\
+LAYOUT_moonlander(\
+XXX, XXX, XXX, XXX, XXX, XXX, XXX,     XXX, XXX, XXX, XXX, XXX, XXX, XXX,\
+XXX, K00, K01, K02, K03, K04, XXX,     XXX, K05, K06, K07, K08, K09, XXX,\
+XXX, K10, K11, K12, K13, K14, XXX,     XXX, K15, K16, K17, K18, K19, XXX,\
+XXX, K20, K21, K22, K23, K24,               K25, K26, K27, K28, K29, XXX,\
+XXX, XXX, XXX, XXX, K32,      XXX,     XXX,      K37, XXX, XXX, XXX, XXX,\
+                    K33, K34, XXX,     XXX, K35, K36\
+)
+#+END_SRC
+
+
+***** [[../../keyboards/moonlander/keymaps/manna-harbour_miryoku/keymap.c][keyboards/moonlander/keymaps/manna-harbour_miryoku/keymap.c]]
+
+Required by the build system.
+
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/moonlander/keymaps/manna-harbour_miryoku/keymap.c
+// <<header>>
+
+<<license-qmk>>
+#+END_SRC
+
+
+**** redox_w
+
+Only the main 5x3 alphas and the main 3 thumb keys are used.
+
+To build for this keyboard,
+
+#+BEGIN_SRC sh :tangle no
+make redox_w:manna-harbour_miryoku:flash
+#+END_SRC
+
+
+***** [[../../keyboards/redox_w/keymaps/manna-harbour_miryoku/config.h][keyboards/redox_w/keymaps/manna-harbour_miryoku/config.h]]
+
+Contains subset mapping.
+
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/redox_w/keymaps/manna-harbour_miryoku/config.h
+// <<header>>
+
+<<license-qmk>>
+
+#pragma once
+
+#define XXX KC_NO
+
+#define LAYOUT_miryoku(\
+     K00, K01, K02, K03, K04,                          K05, K06, K07, K08, K09,\
+     K10, K11, K12, K13, K14,                          K15, K16, K17, K18, K19,\
+     K20, K21, K22, K23, K24,                          K25, K26, K27, K28, K29,\
+     N30, N31, K32, K33, K34,                          K35, K36, K37, N38, N39\
+)\
+LAYOUT(\
+XXX, XXX, XXX, XXX, XXX, XXX,                          XXX, XXX, XXX, XXX, XXX, XXX,\
+XXX, K00, K01, K02, K03, K04, XXX,                XXX, K05, K06, K07, K08, K09, XXX,\
+XXX, K10, K11, K12, K13, K14, XXX,                XXX, K15, K16, K17, K18, K19, XXX,\
+XXX, K20, K21, K22, K23, K24, XXX, XXX,      XXX, XXX, K25, K26, K27, K28, K29, XXX,\
+XXX, XXX, XXX, XXX,    K32,   K33, K34,      K35, K36,    K37,   XXX, XXX, XXX, XXX\
+)
+#+END_SRC
+
+#+RESULTS:
+
+
+***** [[../../keyboards/redox_w/keymaps/manna-harbour_miryoku/keymap.c][keyboards/redox_w/keymaps/manna-harbour_miryoku/keymap.c]]
+
+Required by the build system.
+
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/redox_w/keymaps/manna-harbour_miryoku/keymap.c
+// <<header>>
+
+<<license-qmk>>
+#+END_SRC
+
+
+**** sofle
+
+To build for this keyboard,
+
+#+BEGIN_SRC sh :tangle no
+make sofle:manna-harbour_miryoku:flash
+#+END_SRC
+
+
+***** [[../../keyboards/sofle/keymaps/manna-harbour_miryoku/config.h][keyboards/sofle/keymaps/manna-harbour_miryoku/config.h]]
+
+Contains subset mapping.
+
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/sofle/keymaps/manna-harbour_miryoku/config.h
+// <<header>>
+
+<<license-qmk>>
+
+#pragma once
+
+#define XXX KC_NO
+
+#define LAYOUT_miryoku(\
+     K00, K01, K02, K03, K04,                K05, K06, K07, K08, K09,\
+     K10, K11, K12, K13, K14,                K15, K16, K17, K18, K19,\
+     K20, K21, K22, K23, K24,                K25, K26, K27, K28, K29,\
+     N30, N31, K32, K33, K34,                K35, K36, K37, N38, N39\
+)\
+LAYOUT(\
+XXX, XXX, XXX, XXX, XXX, XXX,                XXX, XXX, XXX, XXX, XXX, XXX,\
+XXX, K00, K01, K02, K03, K04,                K05, K06, K07, K08, K09, XXX,\
+XXX, K10, K11, K12, K13, K14,                K15, K16, K17, K18, K19, XXX,\
+XXX, K20, K21, K22, K23, K24, XXX,      XXX, K25, K26, K27, K28, K29, XXX,\
+          XXX, XXX, K32, K33, K34,      K35, K36, K37, XXX, XXX\
+)
+#+END_SRC
+
+
+***** [[../../keyboards/sofle/keymaps/manna-harbour_miryoku/keymap.c][keyboards/sofle/keymaps/manna-harbour_miryoku/keymap.c]]
+
+Required by the build system.
+
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/sofle/keymaps/manna-harbour_miryoku/keymap.c
+// <<header>>
+
+<<license-qmk>>
+#+END_SRC
+
+
+**** splitkb/kyria
 
 Only the main 5x3 alphas and the middle 3 lower thumb keys are used.
 
@@ -2277,16 +2527,16 @@ position in the direction of thumb extension.  To select this mapping, append
 To build for this keyboard,
 
 #+BEGIN_SRC sh :tangle no
-make kyria:manna-harbour_miryoku:flash
-make kyria:manna-harbour_miryoku:flash MIRYOKU_MAPPING=EXTENDED_THUMBS # extended thumb position
+make splitkb/kyria:manna-harbour_miryoku:flash
+make splitkb/kyria:manna-harbour_miryoku:flash MIRYOKU_MAPPING=EXTENDED_THUMBS # extended thumb position
 #+END_SRC
 
 
-**** [[../../keyboards/kyria/keymaps/manna-harbour_miryoku/config.h][keyboards/kyria/keymaps/manna-harbour_miryoku/config.h]]
+***** [[../../keyboards/splitkb/kyria/keymaps/manna-harbour_miryoku/config.h][keyboards/splitkb/kyria/keymaps/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/kyria/keymaps/manna-harbour_miryoku/config.h
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/splitkb/kyria/keymaps/manna-harbour_miryoku/config.h
 // <<header>>
 
 <<license-qmk>>
@@ -2325,225 +2575,18 @@ XXX, K20, K21, K22, K23, K24, XXX, XXX,      XXX, XXX, K25, K26, K27, K28, K29, 
 #+END_SRC
 
 
-**** [[../../keyboards/kyria/keymaps/manna-harbour_miryoku/keymap.c][keyboards/kyria/keymaps/manna-harbour_miryoku/keymap.c]]
+***** [[../../keyboards/splitkb/kyria/keymaps/manna-harbour_miryoku/keymap.c][keyboards/splitkb/kyria/keymaps/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/kyria/keymaps/manna-harbour_miryoku/keymap.c
+#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/splitkb/kyria/keymaps/manna-harbour_miryoku/keymap.c
 // <<header>>
 
 <<license-qmk>>
 #+END_SRC
 
 
-*** lily58
-
-Only the main 5x3 alphas and the inner 3 thumb keys are used.
-
-To build for this keyboard,
-
-#+BEGIN_SRC sh :tangle no
-make lily58:manna-harbour_miryoku:flash
-#+END_SRC
-
-
-**** [[../../keyboards/lily58/keymaps/manna-harbour_miryoku/config.h][keyboards/lily58/keymaps/manna-harbour_miryoku/config.h]]
-
-Contains subset mapping.
-
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/lily58/keymaps/manna-harbour_miryoku/config.h
-// <<header>>
-
-<<license-qmk>>
-
-#pragma once
-
-#define XXX KC_NO
-
-#define LAYOUT_miryoku(\
-     K00, K01, K02, K03, K04,                K05, K06, K07, K08, K09,\
-     K10, K11, K12, K13, K14,                K15, K16, K17, K18, K19,\
-     K20, K21, K22, K23, K24,                K25, K26, K27, K28, K29,\
-     N30, N31, K32, K33, K34,                K35, K36, K37, N38, N39\
-)\
-LAYOUT(\
-XXX, XXX, XXX, XXX, XXX, XXX,                XXX, XXX, XXX, XXX, XXX, XXX,\
-XXX, K00, K01, K02, K03, K04,                K05, K06, K07, K08, K09, XXX,\
-XXX, K10, K11, K12, K13, K14,                K15, K16, K17, K18, K19, XXX,\
-XXX, K20, K21, K22, K23, K24, XXX,      XXX, K25, K26, K27, K28, K29, XXX,\
-               XXX, K32, K33, K34,      K35, K36, K37, XXX\
-)
-#+END_SRC
-
-
-**** [[../../keyboards/lily58/keymaps/manna-harbour_miryoku/keymap.c][keyboards/lily58/keymaps/manna-harbour_miryoku/keymap.c]]
-
-Required by the build system.
-
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/lily58/keymaps/manna-harbour_miryoku/keymap.c
-// <<header>>
-
-<<license-qmk>>
-#+END_SRC
-
-
-*** moonlander
-
-The main 5x3 alphas are used as usual. The primary, secondary, and tertiary
-thumb keys are the closest piano key, middle piano key, and the innermost key of
-the partial bottom row, respectively.  The remaining keys are unused.
-
-To build for this keyboard,
-
-#+BEGIN_SRC sh :tangle no
-make moonlander:manna-harbour_miryoku:flash
-#+END_SRC
-
-
-**** [[../../keyboards/moonlander/keymaps/manna-harbour_miryoku/config.h][keyboards/moonlander/keymaps/manna-harbour_miryoku/config.h]]
-
-Contains subset mapping.
-
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/moonlander/keymaps/manna-harbour_miryoku/config.h
-// <<header>>
-
-<<license-qmk>>
-
-#pragma once
-
-#define XXX KC_NO
-
-#define LAYOUT_miryoku(\
-     K00, K01, K02, K03, K04,               K05, K06, K07, K08, K09,\
-     K10, K11, K12, K13, K14,               K15, K16, K17, K18, K19,\
-     K20, K21, K22, K23, K24,               K25, K26, K27, K28, K29,\
-     N30, N31, K32, K33, K34,               K35, K36, K37, N38, N39\
-)\
-LAYOUT_moonlander(\
-XXX, XXX, XXX, XXX, XXX, XXX, XXX,     XXX, XXX, XXX, XXX, XXX, XXX, XXX,\
-XXX, K00, K01, K02, K03, K04, XXX,     XXX, K05, K06, K07, K08, K09, XXX,\
-XXX, K10, K11, K12, K13, K14, XXX,     XXX, K15, K16, K17, K18, K19, XXX,\
-XXX, K20, K21, K22, K23, K24,               K25, K26, K27, K28, K29, XXX,\
-XXX, XXX, XXX, XXX, K32,      XXX,     XXX,      K37, XXX, XXX, XXX, XXX,\
-                    K33, K34, XXX,     XXX, K35, K36\
-)
-#+END_SRC
-
-
-**** [[../../keyboards/moonlander/keymaps/manna-harbour_miryoku/keymap.c][keyboards/moonlander/keymaps/manna-harbour_miryoku/keymap.c]]
-
-Required by the build system.
-
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/moonlander/keymaps/manna-harbour_miryoku/keymap.c
-// <<header>>
-
-<<license-qmk>>
-#+END_SRC
-
-
-*** redox_w
-
-Only the main 5x3 alphas and the main 3 thumb keys are used.
-
-To build for this keyboard,
-
-#+BEGIN_SRC sh :tangle no
-make redox_w:manna-harbour_miryoku:flash
-#+END_SRC
-
-
-**** [[../../keyboards/redox_w/keymaps/manna-harbour_miryoku/config.h][keyboards/redox_w/keymaps/manna-harbour_miryoku/config.h]]
-
-Contains subset mapping.
-
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/redox_w/keymaps/manna-harbour_miryoku/config.h
-// <<header>>
-
-<<license-qmk>>
-
-#pragma once
-
-#define XXX KC_NO
-
-#define LAYOUT_miryoku(\
-     K00, K01, K02, K03, K04,                          K05, K06, K07, K08, K09,\
-     K10, K11, K12, K13, K14,                          K15, K16, K17, K18, K19,\
-     K20, K21, K22, K23, K24,                          K25, K26, K27, K28, K29,\
-     N30, N31, K32, K33, K34,                          K35, K36, K37, N38, N39\
-)\
-LAYOUT(\
-XXX, XXX, XXX, XXX, XXX, XXX,                          XXX, XXX, XXX, XXX, XXX, XXX,\
-XXX, K00, K01, K02, K03, K04, XXX,                XXX, K05, K06, K07, K08, K09, XXX,\
-XXX, K10, K11, K12, K13, K14, XXX,                XXX, K15, K16, K17, K18, K19, XXX,\
-XXX, K20, K21, K22, K23, K24, XXX, XXX,      XXX, XXX, K25, K26, K27, K28, K29, XXX,\
-XXX, XXX, XXX, XXX,    K32,   K33, K34,      K35, K36,    K37,   XXX, XXX, XXX, XXX\
-)
-#+END_SRC
-
-#+RESULTS:
-
-
-**** [[../../keyboards/redox_w/keymaps/manna-harbour_miryoku/keymap.c][keyboards/redox_w/keymaps/manna-harbour_miryoku/keymap.c]]
-
-Required by the build system.
-
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/redox_w/keymaps/manna-harbour_miryoku/keymap.c
-// <<header>>
-
-<<license-qmk>>
-#+END_SRC
-
-
-*** sofle
-
-To build for this keyboard,
-
-#+BEGIN_SRC sh :tangle no
-make sofle:manna-harbour_miryoku:flash
-#+END_SRC
-
-
-**** [[../../keyboards/sofle/keymaps/manna-harbour_miryoku/config.h][keyboards/sofle/keymaps/manna-harbour_miryoku/config.h]]
-
-Contains subset mapping.
-
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/sofle/keymaps/manna-harbour_miryoku/config.h
-// <<header>>
-
-<<license-qmk>>
-
-#pragma once
-
-#define XXX KC_NO
-
-#define LAYOUT_miryoku(\
-     K00, K01, K02, K03, K04,                K05, K06, K07, K08, K09,\
-     K10, K11, K12, K13, K14,                K15, K16, K17, K18, K19,\
-     K20, K21, K22, K23, K24,                K25, K26, K27, K28, K29,\
-     N30, N31, K32, K33, K34,                K35, K36, K37, N38, N39\
-)\
-LAYOUT(\
-XXX, XXX, XXX, XXX, XXX, XXX,                XXX, XXX, XXX, XXX, XXX, XXX,\
-XXX, K00, K01, K02, K03, K04,                K05, K06, K07, K08, K09, XXX,\
-XXX, K10, K11, K12, K13, K14,                K15, K16, K17, K18, K19, XXX,\
-XXX, K20, K21, K22, K23, K24, XXX,      XXX, K25, K26, K27, K28, K29, XXX,\
-          XXX, XXX, K32, K33, K34,      K35, K36, K37, XXX, XXX\
-)
-#+END_SRC
-
-
-**** [[../../keyboards/sofle/keymaps/manna-harbour_miryoku/keymap.c][keyboards/sofle/keymaps/manna-harbour_miryoku/keymap.c]]
-
-Required by the build system.
-
-#+BEGIN_SRC C :main no :noweb yes :padline no :tangle ../../keyboards/sofle/keymaps/manna-harbour_miryoku/keymap.c
-// <<header>>
-
-<<license-qmk>>
-#+END_SRC
-
-
-*** torn
+**** torn
 
 To build for this keyboard,
 
@@ -2552,7 +2595,7 @@ make torn:manna-harbour_miryoku:flash
 #+END_SRC
 
 
-**** [[../../keyboards/torn/keymaps/manna-harbour_miryoku/config.h][keyboards/torn/keymaps/manna-harbour_miryoku/config.h]]
+***** [[../../keyboards/torn/keymaps/manna-harbour_miryoku/config.h][keyboards/torn/keymaps/manna-harbour_miryoku/config.h]]
 
 Contains subset mapping.
 
@@ -2580,7 +2623,7 @@ KC_NO, K20,   K21,   K22,   K23,   K24,          K25,   K26,   K27,   K28,   K29
 #+RESULTS:
 
 
-**** [[../../keyboards/torn/keymaps/manna-harbour_miryoku/keymap.c][keyboards/torn/keymaps/manna-harbour_miryoku/keymap.c]]
+***** [[../../keyboards/torn/keymaps/manna-harbour_miryoku/keymap.c][keyboards/torn/keymaps/manna-harbour_miryoku/keymap.c]]
 
 Required by the build system.
 
@@ -2591,7 +2634,7 @@ Required by the build system.
 #+END_SRC
 
 
-** Customisation
+*** Customisation
 
 To add customisations to a keyboard or layout while importing the miryoku
 keymap, copy ~config.h~ and ~keymap.c~ from the keyboard or layout's
@@ -2605,7 +2648,7 @@ layout and modify ~LAYOUT_miryoku~ in ~config.h~ referring to the keyboard or
 layout's ~LAYOUT~ macro.
 
 
-*** Examples
+**** Examples
 
 To use any of the examples, create a new branch from the miryoku development
 branch and follow the same steps as seen in the commit messages and code changes
@@ -2613,28 +2656,28 @@ in the examples, making the appropriate changes for your keyboard and desired
 customisations.
 
 
-**** Add Layers
+***** Add Layers
 
 - https://github.com/manna-harbour/qmk_firmware/commits/miryoku-examples-add-layers/keyboards/crkbd/keymaps/miryoku-examples-add-layers
 
 
-* Experimental Features
+** Experimental Features
 
 
-** Bilateral Combinations
+*** Bilateral Combinations
 
 - [[https://github.com/manna-harbour/qmk_firmware/issues/29][Bilateral Combinations]]
 
 
-** Retro Shift
+*** Retro Shift
 
 - [[https://github.com/manna-harbour/qmk_firmware/issues/33][Retro Shift]]
 
 
-* Documentation                                                  :noexport_1:
+** Documentation
 
 
-** QMK
+*** QMK
 
 - https://docs.qmk.fm/
 - https://docs.qmk.fm/#/config_options
@@ -2651,18 +2694,13 @@ customisations.
 - https://docs.qmk.fm/#/tap_hold
 
 
-** Org Mode
+*** Org Mode
 
 - https://orgmode.org/
 - https://orgmode.org/manual/Tables.html
 - https://orgmode.org/manual/Working-with-Source-Code.html
 
 
-* Contact
-
-For feature requests or issues with code or documentation please
-[[https://github.com/manna-harbour/qmk_firmware/issues/new][open an issue]].
-
-For more general discussion please [[https://github.com/manna-harbour/manna-harbour/tree/main/contact][contact Manna Harbour]].
+**
 
 [[https://github.com/manna-harbour][https://raw.githubusercontent.com/manna-harbour/miryoku/master/data/logos/manna-harbour-boa-32.png]]
